@@ -605,7 +605,7 @@
             color: var(--accent, #f97316); font-weight: 800;
         }
         .slide-giant-text .gt-text .gt-word {
-            display: inline-block; opacity: 0;
+            display: inline-block; opacity: 0; margin-right: 0.25em;
             animation: gtWordFade 0.5s ease-out forwards;
         }
         .slide-giant-text.gt-serif .gt-text { font-family: Georgia, 'Times New Roman', serif; font-style: italic; }
