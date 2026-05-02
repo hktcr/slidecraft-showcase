@@ -2440,9 +2440,11 @@
                     const fi = i - usedCount;
                     const angle = (fi / remaining) * Math.PI * 2;
                     const rx = 42, ry = 38;
-                    l.el.textContent = alphabet[Math.floor(Math.abs(Math.sin(fi * 7.3)) * alphabet.length)];
+                    // Byt ut bokstaven slumpmässigt så ramen känns levande, men med samma bokstäver överlag
+                    l.el.textContent = alphabet[Math.floor(Math.abs(Math.sin(fi * 7.3 + phraseIdx)) * alphabet.length)];
                     l.el.className = 'lm-letter lm-frame';
                     l.el.style.fontSize = (0.7 + Math.abs(Math.sin(angle)) * 0.5) + 'rem';
+                    // Återställ opacity om de kom från center
                     l.el.style.opacity = '';
                     l.el.style.transform = 'rotate(' + Math.round(Math.sin(angle) * 15) + 'deg)';
                     l.el.style.left = (cx + Math.cos(angle) * rx) + '%';
@@ -2453,24 +2455,12 @@
                 if (counter) counter.textContent = (phraseIdx + 1) + ' / ' + phrases.length;
             }
 
-            function scrambleAndMorph() {
-                seed = phraseIdx * 137 + 42;
-                letters.forEach(l => {
-                    l.el.style.left = (5 + Math.abs(Math.sin(seed++ * 3.7)) * 90) + '%';
-                    l.el.style.top = (5 + Math.abs(Math.cos(seed++ * 2.3)) * 85) + '%';
-                    l.el.style.opacity = '0.06';
-                    l.el.style.transform = 'rotate(' + ((seed % 60) - 30) + 'deg)';
-                    l.el.className = 'lm-letter';
-                });
-                setTimeout(() => morphTo(phrases[phraseIdx]), 400);
-            }
-
             createLetters();
             setTimeout(() => morphTo(phrases[0]), 600);
 
             el.addEventListener('click', () => {
                 phraseIdx = (phraseIdx + 1) % phrases.length;
-                scrambleAndMorph();
+                morphTo(phrases[phraseIdx]);
             });
         }, 100); // 100ms delay ensures DOM is ready after innerHTML
 
