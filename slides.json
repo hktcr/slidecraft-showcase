@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "SlideCraft Component Forge — Showcase",
-        "subtitle": "18 animerade slide-typer · 17 teman · Noll beroenden",
+        "subtitle": "22 animerade slide-typer · 17 teman · Noll beroenden",
         "version": "2.0",
         "date": "2026-05-02",
         "note": "⚠️ ALL DATA PÅ DESSA SLIDES ÄR FIKTIV/DEMO — siffror, citat och påståenden är illustrativa exempel."
@@ -11,7 +11,7 @@
             "id": "title",
             "type": "title",
             "title": "SlideCraft Component Forge",
-            "subtitle": "18 animerade slide-typer · 17 teman · 0 externa beroenden",
+            "subtitle": "22 animerade slide-typer · 17 teman · 0 externa beroenden",
             "background": "",
             "note": "Demo — all data är fiktiv"
         },
@@ -245,6 +245,63 @@
             "correction": "Sveriges nationalfågel är koltrasten (Turdus merula), utsedd 1962.",
             "cardTitle": "pitfall",
             "cardSubtitle": "AI-fälla med severity och strikethrough"
+        },
+        {
+            "id": "stat-compare-demo",
+            "type": "stat-compare",
+            "title": "Elevernas AI-användning — FIKTIV",
+            "from": 3,
+            "fromSuffix": "%",
+            "fromLabel": "2022",
+            "to": 68,
+            "toSuffix": "%",
+            "toLabel": "2025",
+            "caption": "Andel gymnasieelever som använder AI veckovis [FIKTIV DATA]",
+            "cardTitle": "stat-compare",
+            "cardSubtitle": "Två siffror med animerad pil"
+        },
+        {
+            "id": "voice-collage-demo",
+            "type": "voice-collage",
+            "title": "Röster från fältet — DEMO",
+            "highlightIndex": 3,
+            "voices": [
+                { "text": "Jag är så trött på det här.", "author": "Lärare, åk 8" },
+                { "text": "ChatGPT är min bästa vän.", "author": "Elev, åk 9" },
+                { "text": "Min dotter pratar bara med AI.", "author": "Vårdnadshavare" },
+                { "text": "Det här förändrar ju fan allting.", "author": "Gymnasieelev" },
+                { "text": "Vi behöver en plan.", "author": "Rektor" },
+                { "text": "Jag fattar inte vad de gör.", "author": "Lärare, åk 7" }
+            ],
+            "cardTitle": "voice-collage",
+            "cardSubtitle": "Grid av citat med organisk rotation"
+        },
+        {
+            "id": "portrait-quote-demo",
+            "type": "portrait-quote",
+            "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+            "text": "Det här förändrar ju fan allting. [FIKTIVT CITAT]",
+            "attribution": "William",
+            "context": "Gymnasieelev · mars 2023",
+            "imagePosition": "left",
+            "cardTitle": "portrait-quote",
+            "cardSubtitle": "Citat med porträtt och dekorativt citattecken"
+        },
+        {
+            "id": "reflection-demo",
+            "type": "reflection",
+            "tag": "REFLEKTION",
+            "title": "Hur använder ni AI idag? — DEMO",
+            "duration": "5 min i par",
+            "mode": "pair",
+            "questions": [
+                "Vad funkar?",
+                "Vad skaver?",
+                "Vad skulle ni vilja ändra?",
+                "Vad behöver ni för att ta nästa steg?"
+            ],
+            "cardTitle": "reflection",
+            "cardSubtitle": "Reflektionsfrågor med stagger-animation"
         }
     ]
 }

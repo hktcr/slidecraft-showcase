@@ -7,6 +7,7 @@
  *   Sprint 3: progress-ring, number-wall, bar-race
  *   Sprint 4: giant-text, callout, section-divider, hero-image, outro
  *   Sprint 5: ai-conversation, before-after, prompt-reveal, pitfall
+ *   Sprint 6: stat-compare, voice-collage, portrait-quote, reflection
  *
  * Usage: Add <script src="modules/component-forge/component-forge.js"></script>
  *        to any SlideCraft shell.html
@@ -1013,6 +1014,146 @@
             background: rgba(239,68,68,0.12); border-color: #ef4444; color: #f87171;
             box-shadow: 0 0 20px rgba(239,68,68,0.2);
         }
+
+        /* ===== SPRINT 6: STAT COMPARE ===== */
+        @keyframes scArrowDraw {
+            0% { stroke-dashoffset: 60; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .slide-stat-compare {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 3rem; min-height: 70vh; text-align: center;
+        }
+        .slide-stat-compare .sc-title {
+            font-size: 1.3rem; font-weight: 600; color: var(--text, #f1f5f9);
+            margin-bottom: 2rem; opacity: 0.7;
+        }
+        .slide-stat-compare .sc-row {
+            display: flex; align-items: center; gap: 2rem;
+        }
+        .slide-stat-compare .sc-num {
+            text-align: center;
+        }
+        .slide-stat-compare .sc-value {
+            font-size: clamp(3rem, 8vw, 6rem); font-weight: 800;
+            line-height: 1;
+        }
+        .slide-stat-compare .sc-label {
+            font-size: 0.9rem; color: var(--text, #f1f5f9); opacity: 0.5; margin-top: 0.3rem;
+        }
+        .slide-stat-compare .sc-arrow {
+            width: 60px; height: 40px;
+        }
+        .slide-stat-compare .sc-arrow line, .slide-stat-compare .sc-arrow polyline {
+            stroke: var(--accent, #f97316); stroke-width: 2; fill: none;
+            stroke-dasharray: 60; stroke-dashoffset: 60;
+            animation: scArrowDraw 1s ease-out 1s forwards;
+        }
+        .slide-stat-compare .sc-caption {
+            font-size: 0.9rem; color: var(--text, #f1f5f9); opacity: 0.5; margin-top: 1.5rem;
+        }
+
+        /* ===== SPRINT 6: VOICE COLLAGE ===== */
+        @keyframes vcCardIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .slide-voice-collage {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 2rem 3rem; min-height: 70vh;
+        }
+        .slide-voice-collage .vc-title {
+            font-size: 1.4rem; font-weight: 700; color: var(--text, #f1f5f9);
+            margin-bottom: 1.5rem;
+        }
+        .slide-voice-collage .vc-grid {
+            display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center;
+            max-width: 800px;
+        }
+        .slide-voice-collage .vc-card {
+            padding: 1rem 1.3rem; background: rgba(255,255,255,0.06);
+            border-radius: 12px; border-left: 3px solid var(--accent, #f97316);
+            opacity: 0; animation: vcCardIn 0.4s ease-out forwards;
+            max-width: 280px;
+        }
+        .slide-voice-collage .vc-card .vc-text {
+            font-size: 0.95rem; color: var(--text, #f1f5f9); line-height: 1.5;
+            font-style: italic;
+        }
+        .slide-voice-collage .vc-card .vc-author {
+            font-size: 0.75rem; color: var(--accent, #f97316); margin-top: 0.4rem;
+            font-weight: 600; font-style: normal;
+        }
+
+        /* ===== SPRINT 6: PORTRAIT QUOTE ===== */
+        @keyframes pqFadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .slide-portrait-quote {
+            display: flex; align-items: center; justify-content: center;
+            padding: 3rem 4rem; min-height: 70vh; gap: 3rem;
+        }
+        .slide-portrait-quote .pq-image {
+            width: 180px; height: 180px; border-radius: 50%; object-fit: cover;
+            border: 3px solid var(--accent, #f97316); flex-shrink: 0;
+            box-shadow: 0 0 30px rgba(0,0,0,0.3);
+        }
+        .slide-portrait-quote .pq-content { max-width: 500px; }
+        .slide-portrait-quote .pq-mark {
+            font-size: 5rem; line-height: 1; color: var(--accent, #f97316); opacity: 0.2;
+            font-family: Georgia, serif; margin-bottom: -1.5rem;
+        }
+        .slide-portrait-quote .pq-text {
+            font-size: 1.3rem; line-height: 1.6; color: var(--text, #f1f5f9);
+            font-style: italic; animation: pqFadeIn 0.6s ease-out;
+        }
+        .slide-portrait-quote .pq-attribution {
+            margin-top: 1rem; font-size: 1rem; font-weight: 700;
+            color: var(--text, #f1f5f9);
+            animation: pqFadeIn 0.6s ease-out 0.3s both;
+        }
+        .slide-portrait-quote .pq-context {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--accent, #f97316); margin-top: 0.2rem;
+            animation: pqFadeIn 0.6s ease-out 0.4s both;
+        }
+
+        /* ===== SPRINT 6: REFLECTION ===== */
+        @keyframes refQuestionIn {
+            0% { opacity: 0; transform: translateX(-15px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .slide-reflection {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 3rem; min-height: 70vh;
+        }
+        .slide-reflection .ref-tag {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--accent, #f97316); margin-bottom: 0.5rem; font-weight: 600;
+        }
+        .slide-reflection .ref-title {
+            font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700;
+            color: var(--text, #f1f5f9); margin-bottom: 0.5rem; text-align: center;
+        }
+        .slide-reflection .ref-duration {
+            font-size: 0.85rem; color: var(--text, #f1f5f9); opacity: 0.5;
+            margin-bottom: 2rem;
+        }
+        .slide-reflection .ref-questions {
+            list-style: none; padding: 0; max-width: 550px; width: 100%;
+        }
+        .slide-reflection .ref-questions li {
+            padding: 0.7rem 0; padding-left: 1.5rem; position: relative;
+            font-size: 1.15rem; color: var(--text, #f1f5f9); line-height: 1.5;
+            opacity: 0; animation: refQuestionIn 0.5s ease-out forwards;
+            border-left: 2px solid rgba(255,255,255,0.08);
+        }
+        .slide-reflection .ref-questions li::before {
+            content: ''; position: absolute; left: -5px; top: 1rem;
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--accent, #f97316);
+        }
     `;
     document.head.appendChild(style);
 
@@ -1715,6 +1856,110 @@
         `;
     }
 
+    // ===== SPRINT 6 RENDERERS =====
+
+    /**
+     * stat-compare — Two numbers with animated arrow.
+     * Props: title, from, fromLabel, fromSuffix, to, toLabel, toSuffix, caption
+     */
+    function renderStatCompare(s) {
+        const from = s.from != null ? s.from : 0;
+        const to = s.to != null ? s.to : 0;
+        const fromColor = to > from ? 'rgba(255,255,255,0.5)' : '#ef4444';
+        const toColor = to > from ? '#10b981' : '#ef4444';
+
+        return `
+            <div class="slide-stat-compare">
+                ${s.title ? `<div class="sc-title">${s.title}</div>` : ''}
+                <div class="sc-row">
+                    <div class="sc-num">
+                        <div class="sc-value" style="color:${fromColor}">${s.fromPrefix||''}${from}${s.fromSuffix||''}</div>
+                        ${s.fromLabel ? `<div class="sc-label">${s.fromLabel}</div>` : ''}
+                    </div>
+                    <svg class="sc-arrow" viewBox="0 0 60 40">
+                        <line x1="5" y1="20" x2="45" y2="20"/>
+                        <polyline points="38,12 48,20 38,28"/>
+                    </svg>
+                    <div class="sc-num">
+                        <div class="sc-value" style="color:${toColor}">${s.toPrefix||''}${to}${s.toSuffix||''}</div>
+                        ${s.toLabel ? `<div class="sc-label">${s.toLabel}</div>` : ''}
+                    </div>
+                </div>
+                ${s.caption ? `<div class="sc-caption">${s.caption}</div>` : ''}
+            </div>
+        `;
+    }
+
+    /**
+     * voice-collage — Grid of short quotes.
+     * Props: title, voices[] ({ text, author }), highlightIndex
+     */
+    function renderVoiceCollage(s) {
+        const voices = s.voices || [];
+        const rotations = [-2, 1.5, -1, 2, -1.5, 0.8, -0.5, 1.8];
+        const cards = voices.map((v, i) => {
+            const rot = rotations[i % rotations.length];
+            const delay = i * 0.12;
+            const highlight = i === s.highlightIndex ? 'border-color: var(--accent, #f97316); box-shadow: 0 0 15px rgba(249,115,22,0.2);' : '';
+            const fontSize = (v.text || '').length < 40 ? '1.15rem' : '0.95rem';
+            return `<div class="vc-card" style="animation-delay:${delay}s; transform:rotate(${rot}deg); ${highlight}">
+                <div class="vc-text" style="font-size:${fontSize}">${v.text || ''}</div>
+                ${v.author ? `<div class="vc-author">— ${v.author}</div>` : ''}
+            </div>`;
+        }).join('');
+
+        return `
+            <div class="slide-voice-collage">
+                ${s.title ? `<div class="vc-title">${s.title}</div>` : ''}
+                <div class="vc-grid">${cards}</div>
+            </div>
+        `;
+    }
+
+    /**
+     * portrait-quote — Quote with portrait image.
+     * Props: image, attribution, context, text, imagePosition ("left"|"right")
+     */
+    function renderPortraitQuote(s) {
+        const pos = s.imagePosition === 'right' ? 'row-reverse' : 'row';
+        return `
+            <div class="slide-portrait-quote" style="flex-direction:${pos}">
+                ${s.image ? `<img class="pq-image" src="${s.image}" alt="${s.attribution || ''}">` : ''}
+                <div class="pq-content">
+                    <div class="pq-mark">“</div>
+                    <div class="pq-text">${s.text || ''}</div>
+                    ${s.attribution ? `<div class="pq-attribution">${s.attribution}</div>` : ''}
+                    ${s.context ? `<div class="pq-context">${s.context}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * reflection — Sequential questions for audience.
+     * Props: title, tag, duration, questions[], mode ("pair"|"group"|"individual")
+     */
+    function renderReflection(s) {
+        const questions = s.questions || [];
+        const tag = s.tag || 'REFLEKTION';
+        const modeIcons = { pair: '👥', group: '👫👫', individual: '🧑' };
+        const modeIcon = modeIcons[s.mode] || '';
+
+        const qs = questions.map((q, i) => {
+            const delay = i * 0.4;
+            return `<li style="animation-delay:${delay}s">${q}</li>`;
+        }).join('');
+
+        return `
+            <div class="slide-reflection">
+                <div class="ref-tag">${tag} ${modeIcon}</div>
+                ${s.title ? `<div class="ref-title">${s.title}</div>` : ''}
+                ${s.duration ? `<div class="ref-duration">${s.duration}</div>` : ''}
+                <ul class="ref-questions">${qs}</ul>
+            </div>
+        `;
+    }
+
     // ===== MONKEY-PATCH REGISTRY =====
     const allTypes = {
         'word-cascade': renderWordCascade,
@@ -1736,7 +1981,12 @@
         'ai-conversation': renderAiConversation,
         'before-after': renderBeforeAfter,
         'prompt-reveal': renderPromptReveal,
-        'pitfall': renderPitfall
+        'pitfall': renderPitfall,
+        // Sprint 6
+        'stat-compare': renderStatCompare,
+        'voice-collage': renderVoiceCollage,
+        'portrait-quote': renderPortraitQuote,
+        'reflection': renderReflection
     };
 
     function registerTypes() {
