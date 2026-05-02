@@ -6,6 +6,7 @@
  *   Sprint 2: line-chart, comparison, timeline-vertical
  *   Sprint 3: progress-ring, number-wall, bar-race
  *   Sprint 4: giant-text, callout, section-divider, hero-image, outro
+ *   Sprint 5: ai-conversation, before-after, prompt-reveal, pitfall
  *
  * Usage: Add <script src="modules/component-forge/component-forge.js"></script>
  *        to any SlideCraft shell.html
@@ -797,6 +798,221 @@
             border-radius: 50%; background: var(--accent, #f97316);
             margin-right: 0.7rem; vertical-align: middle;
         }
+
+        /* ===== SPRINT 5: AI CONVERSATION ===== */
+        @keyframes aicDotPulse {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes aicMsgIn {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .slide-ai-conversation {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 2rem 3rem; min-height: 70vh;
+        }
+        .slide-ai-conversation .aic-title {
+            font-size: 1.4rem; font-weight: 700; color: var(--text, #f1f5f9);
+            margin-bottom: 1.5rem; text-align: center;
+        }
+        .slide-ai-conversation .aic-chat {
+            width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 0.6rem;
+            background: rgba(255,255,255,0.04); border-radius: 16px; padding: 1.5rem;
+            max-height: 55vh; overflow-y: auto;
+        }
+        .slide-ai-conversation .aic-msg {
+            max-width: 80%; padding: 0.7rem 1rem; border-radius: 14px;
+            font-size: 0.95rem; line-height: 1.5; opacity: 0;
+            animation: aicMsgIn 0.4s ease-out forwards;
+        }
+        .slide-ai-conversation .aic-msg.aic-user {
+            align-self: flex-end; background: var(--accent, #f97316); color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+        .slide-ai-conversation .aic-msg.aic-ai {
+            align-self: flex-start; background: rgba(255,255,255,0.1);
+            color: var(--text, #f1f5f9); border-bottom-left-radius: 4px;
+        }
+        .slide-ai-conversation .aic-label {
+            font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.08em; margin-bottom: 0.2rem; opacity: 0.6;
+        }
+        .slide-ai-conversation .aic-dots {
+            display: inline-flex; gap: 4px; padding: 0.5rem 0;
+        }
+        .slide-ai-conversation .aic-dots span {
+            width: 6px; height: 6px; border-radius: 50%; background: var(--text, #f1f5f9);
+        }
+        .slide-ai-conversation .aic-dots span:nth-child(1) { animation: aicDotPulse 1.2s infinite 0s; }
+        .slide-ai-conversation .aic-dots span:nth-child(2) { animation: aicDotPulse 1.2s infinite 0.2s; }
+        .slide-ai-conversation .aic-dots span:nth-child(3) { animation: aicDotPulse 1.2s infinite 0.4s; }
+
+        /* ===== SPRINT 5: BEFORE-AFTER ===== */
+        @keyframes baTypeChar {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        @keyframes baResultIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes baProcessDot {
+            0%, 80%, 100% { opacity: 0.2; }
+            40% { opacity: 1; }
+        }
+        .slide-before-after {
+            display: flex; align-items: stretch; min-height: 70vh; gap: 0;
+        }
+        .slide-before-after .ba-prompt-side, .slide-before-after .ba-result-side {
+            flex: 1; display: flex; flex-direction: column; justify-content: center;
+            padding: 3rem;
+        }
+        .slide-before-after .ba-prompt-side {
+            background: rgba(255,255,255,0.03); border-right: 1px solid rgba(255,255,255,0.08);
+        }
+        .slide-before-after .ba-label {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em;
+            color: var(--accent, #f97316); margin-bottom: 0.75rem; font-weight: 600;
+        }
+        .slide-before-after .ba-prompt-text {
+            font-family: 'SF Mono', 'Fira Code', monospace; font-size: 1rem;
+            color: var(--text, #f1f5f9); line-height: 1.6;
+            background: rgba(0,0,0,0.3); padding: 1.2rem; border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden; white-space: pre-wrap;
+        }
+        .slide-before-after .ba-processing {
+            display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;
+            font-size: 0.85rem; color: var(--text, #f1f5f9); opacity: 0.6;
+        }
+        .slide-before-after .ba-processing .ba-dot {
+            width: 5px; height: 5px; border-radius: 50%; background: var(--accent, #f97316);
+        }
+        .slide-before-after .ba-processing .ba-dot:nth-child(1) { animation: baProcessDot 1.4s infinite 0s; }
+        .slide-before-after .ba-processing .ba-dot:nth-child(2) { animation: baProcessDot 1.4s infinite 0.2s; }
+        .slide-before-after .ba-processing .ba-dot:nth-child(3) { animation: baProcessDot 1.4s infinite 0.4s; }
+        .slide-before-after .ba-result-content {
+            animation: baResultIn 0.8s ease-out 0.5s both;
+        }
+        .slide-before-after .ba-result-content img {
+            max-width: 100%; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        .slide-before-after .ba-result-text {
+            font-size: 1.15rem; line-height: 1.7; color: var(--text, #f1f5f9);
+        }
+        .slide-before-after .ba-caption {
+            font-size: 0.85rem; color: var(--text, #f1f5f9); opacity: 0.5; margin-top: 0.75rem;
+        }
+
+        /* ===== SPRINT 5: PROMPT REVEAL ===== */
+        @keyframes prCursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .slide-prompt-reveal {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 3rem; min-height: 70vh;
+        }
+        .slide-prompt-reveal .pr-title {
+            font-size: 1.2rem; font-weight: 600; color: var(--text, #f1f5f9);
+            margin-bottom: 1rem; opacity: 0.7;
+        }
+        .slide-prompt-reveal .pr-window {
+            width: 100%; max-width: 700px; background: rgba(0,0,0,0.4);
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+        }
+        .slide-prompt-reveal .pr-toolbar {
+            display: flex; align-items: center; gap: 6px; padding: 10px 14px;
+            background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .slide-prompt-reveal .pr-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+        }
+        .slide-prompt-reveal .pr-dot:nth-child(1) { background: #ff5f57; }
+        .slide-prompt-reveal .pr-dot:nth-child(2) { background: #febc2e; }
+        .slide-prompt-reveal .pr-dot:nth-child(3) { background: #28c840; }
+        .slide-prompt-reveal .pr-lang {
+            margin-left: auto; font-size: 0.7rem; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--accent, #f97316); font-weight: 600;
+        }
+        .slide-prompt-reveal .pr-code {
+            padding: 1.5rem; font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 0.95rem; line-height: 1.7; color: var(--text, #f1f5f9);
+            white-space: pre-wrap;
+        }
+        .slide-prompt-reveal .pr-cursor {
+            display: inline-block; width: 2px; height: 1.1em;
+            background: var(--accent, #f97316); vertical-align: text-bottom;
+            animation: prCursorBlink 0.8s infinite;
+        }
+        .slide-prompt-reveal .pr-caption {
+            font-size: 0.9rem; color: var(--text, #f1f5f9); opacity: 0.5;
+            margin-top: 1rem; text-align: center;
+        }
+
+        /* ===== SPRINT 5: PITFALL ===== */
+        @keyframes pfShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+            20%, 40%, 60%, 80% { transform: translateX(3px); }
+        }
+        @keyframes pfStrikethrough {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        @keyframes pfCorrectionIn {
+            0% { opacity: 0; transform: translateX(20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .slide-pitfall {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 3rem; min-height: 70vh;
+        }
+        .slide-pitfall .pf-badge {
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; padding: 0.3rem 1rem; border-radius: 20px;
+            margin-bottom: 1.5rem;
+        }
+        .slide-pitfall .pf-badge.pf-warning { background: rgba(245,158,11,0.2); color: #f59e0b; }
+        .slide-pitfall .pf-badge.pf-danger { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .slide-pitfall .pf-badge.pf-critical {
+            background: rgba(239,68,68,0.3); color: #ef4444;
+            animation: pfShake 0.6s ease-in-out;
+        }
+        .slide-pitfall .pf-qa {
+            max-width: 650px; width: 100%;
+        }
+        .slide-pitfall .pf-question {
+            font-size: 1.1rem; color: var(--text, #f1f5f9); padding: 1rem 1.2rem;
+            background: rgba(255,255,255,0.06); border-radius: 12px;
+            margin-bottom: 0.8rem;
+        }
+        .slide-pitfall .pf-answer {
+            font-size: 1rem; color: var(--text, #f1f5f9); opacity: 0.8;
+            padding: 1rem 1.2rem; background: rgba(255,255,255,0.03);
+            border-radius: 12px; border-left: 3px solid rgba(255,255,255,0.15);
+            position: relative; margin-bottom: 1rem;
+        }
+        .slide-pitfall .pf-answer .pf-strike {
+            position: absolute; top: 50%; left: 0; height: 2px;
+            background: #ef4444; animation: pfStrikethrough 0.8s ease-out 1.5s forwards;
+        }
+        .slide-pitfall .pf-correction {
+            padding: 1rem 1.2rem; border-radius: 12px; border-left: 3px solid;
+            animation: pfCorrectionIn 0.6s ease-out 2.5s both;
+        }
+        .slide-pitfall .pf-correction.pf-sev-warning {
+            background: rgba(245,158,11,0.08); border-color: #f59e0b; color: #fbbf24;
+        }
+        .slide-pitfall .pf-correction.pf-sev-danger {
+            background: rgba(239,68,68,0.08); border-color: #ef4444; color: #f87171;
+        }
+        .slide-pitfall .pf-correction.pf-sev-critical {
+            background: rgba(239,68,68,0.12); border-color: #ef4444; color: #f87171;
+            box-shadow: 0 0 20px rgba(239,68,68,0.2);
+        }
     `;
     document.head.appendChild(style);
 
@@ -1366,6 +1582,139 @@
         `;
     }
 
+    // ===== SPRINT 5 RENDERERS =====
+
+    /**
+     * ai-conversation — Simulated AI chat with typing indicator.
+     * Props: title, messages[] ({ role: "user"|"ai", label?, text }),
+     *        userLabel, aiLabel, highlightPattern (regex string)
+     */
+    function renderAiConversation(s) {
+        const userLabel = s.userLabel || 'Du';
+        const aiLabel = s.aiLabel || 'AI';
+        const highlight = s.highlightPattern ? new RegExp(`(${s.highlightPattern})`, 'gi') : null;
+        const msgs = s.messages || [];
+
+        let msgHtml = '';
+        msgs.forEach((m, i) => {
+            const isUser = (m.role || '').toLowerCase() === 'user';
+            const cls = isUser ? 'aic-user' : 'aic-ai';
+            const label = m.label || (isUser ? userLabel : aiLabel);
+            const baseDelay = i * 1.2;
+            let text = m.text || '';
+            if (highlight && !isUser) {
+                text = text.replace(highlight, '<strong style="color:var(--accent,#f97316)">$1</strong>');
+            }
+
+            // Typing dots before AI messages
+            if (!isUser && i > 0) {
+                const dotsDelay = baseDelay - 0.6;
+                msgHtml += `<div class="aic-msg aic-ai" style="animation-delay:${dotsDelay}s; padding: 0.5rem 1rem;">
+                    <div class="aic-dots"><span></span><span></span><span></span></div>
+                </div>`;
+            }
+
+            msgHtml += `<div class="aic-msg ${cls}" style="animation-delay:${baseDelay}s">
+                <div class="aic-label">${label}</div>
+                ${text}
+            </div>`;
+        });
+
+        return `
+            <div class="slide-ai-conversation">
+                ${s.title ? `<div class="aic-title">${s.title}</div>` : ''}
+                <div class="aic-chat">${msgHtml}</div>
+            </div>
+        `;
+    }
+
+    /**
+     * before-after — Prompt typed → result revealed.
+     * Props: promptText, resultType ("image"|"text"|"code"),
+     *        resultContent (text or image URL), caption, comparison (bool)
+     */
+    function renderBeforeAfter(s) {
+        const resultType = s.resultType || 'text';
+        let resultHtml = '';
+        if (resultType === 'image') {
+            resultHtml = `<img src="${s.resultContent || ''}" alt="Result">`;
+        } else if (resultType === 'code') {
+            resultHtml = `<pre style="font-family:'SF Mono',monospace;font-size:0.9rem;color:var(--text,#f1f5f9);line-height:1.6;white-space:pre-wrap;">${s.resultContent || ''}</pre>`;
+        } else {
+            resultHtml = `<div class="ba-result-text">${s.resultContent || ''}</div>`;
+        }
+
+        return `
+            <div class="slide-before-after">
+                <div class="ba-prompt-side">
+                    <div class="ba-label">Prompt</div>
+                    <div class="ba-prompt-text">${s.promptText || ''}</div>
+                    <div class="ba-processing">
+                        <span class="ba-dot"></span><span class="ba-dot"></span><span class="ba-dot"></span>
+                        <span style="margin-left:0.3rem">Genererar...</span>
+                    </div>
+                </div>
+                <div class="ba-result-side">
+                    <div class="ba-label">Resultat</div>
+                    <div class="ba-result-content">
+                        ${resultHtml}
+                    </div>
+                    ${s.caption ? `<div class="ba-caption">${s.caption}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * prompt-reveal — Code/prompt in a terminal-like window.
+     * Props: code, language, title, caption, mode ("typewriter"|"instant"|"input")
+     */
+    function renderPromptReveal(s) {
+        const mode = s.mode || 'instant';
+        const lang = s.language || 'prompt';
+        const code = s.code || '';
+
+        // Typewriter effect: show text char-by-char via CSS clip
+        const codeHtml = mode === 'typewriter'
+            ? `<span class="pr-typed">${code}</span><span class="pr-cursor"></span>`
+            : code;
+
+        return `
+            <div class="slide-prompt-reveal">
+                ${s.title ? `<div class="pr-title">${s.title}</div>` : ''}
+                <div class="pr-window">
+                    <div class="pr-toolbar">
+                        <div class="pr-dot"></div><div class="pr-dot"></div><div class="pr-dot"></div>
+                        <span class="pr-lang">${lang}</span>
+                    </div>
+                    <div class="pr-code">${codeHtml}</div>
+                </div>
+                ${s.caption ? `<div class="pr-caption">${s.caption}</div>` : ''}
+            </div>
+        `;
+    }
+
+    /**
+     * pitfall — AI failure visualization.
+     * Props: badge, severity ("warning"|"danger"|"critical"),
+     *        question, answer, correction
+     */
+    function renderPitfall(s) {
+        const sev = s.severity || 'danger';
+        const badge = s.badge || (sev === 'critical' ? 'HALLUCINATION' : 'AI-FÄLLA');
+
+        return `
+            <div class="slide-pitfall${sev === 'critical' ? ' pf-shake-container' : ''}">
+                <div class="pf-badge pf-${sev}">${badge}</div>
+                <div class="pf-qa">
+                    ${s.question ? `<div class="pf-question">❓ ${s.question}</div>` : ''}
+                    ${s.answer ? `<div class="pf-answer">${s.answer}<div class="pf-strike"></div></div>` : ''}
+                    ${s.correction ? `<div class="pf-correction pf-sev-${sev}">✓ ${s.correction}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+
     // ===== MONKEY-PATCH REGISTRY =====
     const allTypes = {
         'word-cascade': renderWordCascade,
@@ -1382,7 +1731,12 @@
         'callout': renderCallout,
         'section-divider': renderSectionDivider,
         'hero-image': renderHeroImage,
-        'outro': renderOutro
+        'outro': renderOutro,
+        // Sprint 5
+        'ai-conversation': renderAiConversation,
+        'before-after': renderBeforeAfter,
+        'prompt-reveal': renderPromptReveal,
+        'pitfall': renderPitfall
     };
 
     function registerTypes() {

@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "SlideCraft Component Forge — Showcase",
-        "subtitle": "14 animerade slide-typer · 17 teman · Noll beroenden",
+        "subtitle": "18 animerade slide-typer · 17 teman · Noll beroenden",
         "version": "2.0",
         "date": "2026-05-02",
         "note": "⚠️ ALL DATA PÅ DESSA SLIDES ÄR FIKTIV/DEMO — siffror, citat och påståenden är illustrativa exempel."
@@ -11,7 +11,7 @@
             "id": "title",
             "type": "title",
             "title": "SlideCraft Component Forge",
-            "subtitle": "14 animerade slide-typer · 17 teman · 0 externa beroenden",
+            "subtitle": "18 animerade slide-typer · 17 teman · 0 externa beroenden",
             "background": "",
             "note": "Demo — all data är fiktiv"
         },
@@ -199,6 +199,52 @@
             "nextSteps": ["Testa Component Forge lokalt", "Bygg din första presentation", "Anpassa ett tema"],
             "cardTitle": "outro",
             "cardSubtitle": "Avslutning med QR-kod och kontaktinfo"
+        },
+        {
+            "id": "ai-conversation-demo",
+            "type": "ai-conversation",
+            "title": "Fotosyntes för sjuåringar — DEMO",
+            "highlightPattern": "fotosyntes|klorofyll|solsken",
+            "messages": [
+                { "role": "user", "text": "Hur förklarar jag fotosyntes för sjuåringar?" },
+                { "role": "ai", "label": "ChatGPT", "text": "Tänk dig att bladet är en kock som lagar mat av solsken, vatten och luft. Receptet heter klorofyll och är grönt." },
+                { "role": "user", "text": "Gör en uppgift av det här" },
+                { "role": "ai", "label": "ChatGPT", "text": "Barnen kan rita bladet som kock och märka ingredienserna: sol, vatten, koldioxid. Låt dem hitta på egna recept!" }
+            ],
+            "cardTitle": "ai-conversation",
+            "cardSubtitle": "Simulerad AI-dialog med typing-prickar"
+        },
+        {
+            "id": "before-after-demo",
+            "type": "before-after",
+            "promptText": "Skapa ett interaktivt spel om\ncelldelning för åk 7.\nSpelet ska ha tre nivåer.",
+            "resultType": "text",
+            "resultContent": "Ett webbspel där eleverna styr en cell genom mitos. Nivå 1: identifiera faserna. Nivå 2: sortera kromosomerna. Nivå 3: tidtagen utmaning.",
+            "caption": "Genererat på 2 minuter — det som tidigare tog en hel eftermiddag [FIKTIV]",
+            "cardTitle": "before-after",
+            "cardSubtitle": "Prompt → AI-resultat med processing-animation"
+        },
+        {
+            "id": "prompt-reveal-demo",
+            "type": "prompt-reveal",
+            "title": "Så här kan en pedagogisk prompt se ut",
+            "language": "prompt",
+            "mode": "typewriter",
+            "code": "Agera som en erfaren NO-lärare.\nSkapa ett Jeopardy-spel om ekologi.\n5 kategorier, 5 frågor per kategori.\nSvårighetsgrad ökar per rad.\nAnpassa för åk 7.",
+            "caption": "Kontext + format + nivå = bättre resultat [DEMO]",
+            "cardTitle": "prompt-reveal",
+            "cardSubtitle": "Terminal-fönster med blinkande cursor"
+        },
+        {
+            "id": "pitfall-demo",
+            "type": "pitfall",
+            "badge": "HALLUCINATION",
+            "severity": "danger",
+            "question": "Vilken fågel är Sveriges nationalfågel?",
+            "answer": "Sveriges nationalfågel är storskarven (Phalacrocorax carbo), som utsågs 1962.",
+            "correction": "Sveriges nationalfågel är koltrasten (Turdus merula), utsedd 1962.",
+            "cardTitle": "pitfall",
+            "cardSubtitle": "AI-fälla med severity och strikethrough"
         }
     ]
 }
