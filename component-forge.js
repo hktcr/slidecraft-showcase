@@ -107,6 +107,13 @@
             margin-bottom: 0.8rem;
             display: block;
         }
+        .slide-box-reveal .br-icon-img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            margin: 0 auto 0.8rem;
+            display: block;
+        }
         .slide-box-reveal .br-title {
             font-size: 1.2rem;
             font-weight: 700;
@@ -476,6 +483,13 @@
             margin-bottom: 0.5rem;
             display: block;
         }
+        .slide-number-wall .nw-icon-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            margin: 0 auto 0.5rem;
+            display: block;
+        }
         .slide-number-wall .nw-value {
             font-size: clamp(2.2rem, 5vw, 3.5rem);
             font-weight: 700;
@@ -588,16 +602,25 @@
 
     /**
      * box-reveal: Boxes that bounce in with glassmorphism borders
-     * JSON: { type: "box-reveal", title: "...", boxes: [{ icon: "🎯", title: "...", text: "..." }, ...] }
+     * JSON: { type: "box-reveal", title: "...",
+     *         boxes: [{ title: "...", text: "...", icon: "optional emoji", iconSrc: "optional/path.png" }, ...] }
      */
     function renderBoxReveal(s) {
-        const boxes = (s.boxes || []).map((box, i) => `
+        const boxes = (s.boxes || []).map((box, i) => {
+            let iconHTML = '';
+            if (box.iconSrc) {
+                iconHTML = `<img class="br-icon-img" src="${box.iconSrc}" alt="${box.title || ''}">`;
+            } else if (box.icon) {
+                iconHTML = `<span class="br-icon">${box.icon}</span>`;
+            }
+            return `
             <div class="br-box" style="animation: boxBounce 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) ${300 + i * 250}ms forwards">
-                <span class="br-icon">${box.icon || '📌'}</span>
+                ${iconHTML}
                 <div class="br-title">${box.title || ''}</div>
                 <div class="br-text">${box.text || ''}</div>
             </div>
-        `).join('');
+        `;
+        }).join('');
 
         return `
             <div class="slide-box-reveal">
@@ -888,9 +911,16 @@
                 requestAnimationFrame(tick);
             }, delay + 400);
 
+            let iconHTML = '';
+            if (n.iconSrc) {
+                iconHTML = `<img class="nw-icon-img" src="${n.iconSrc}" alt="${n.label || ''}">`;
+            } else if (n.icon) {
+                iconHTML = `<span class="nw-icon">${n.icon}</span>`;
+            }
+
             return `
                 <div class="nw-cell" style="animation:boxBounce 0.6s cubic-bezier(0.34,1.56,0.64,1) ${delay}ms forwards">
-                    ${n.icon ? `<span class="nw-icon">${n.icon}</span>` : ''}
+                    ${iconHTML}
                     <div class="nw-value" id="${uid}">0</div>
                     <div class="nw-label">${n.label || ''}</div>
                 </div>
