@@ -1,8 +1,8 @@
 {
     "meta": {
         "title": "SlideCraft Component Forge — Showcase",
-        "subtitle": "9 animerade slide-typer · 17 teman · Noll beroenden",
-        "version": "1.0",
+        "subtitle": "14 animerade slide-typer · 17 teman · Noll beroenden",
+        "version": "2.0",
         "date": "2026-05-02",
         "note": "⚠️ ALL DATA PÅ DESSA SLIDES ÄR FIKTIV/DEMO — siffror, citat och påståenden är illustrativa exempel."
     },
@@ -11,7 +11,7 @@
             "id": "title",
             "type": "title",
             "title": "SlideCraft Component Forge",
-            "subtitle": "9 animerade slide-typer · 17 teman · 0 externa beroenden",
+            "subtitle": "14 animerade slide-typer · 17 teman · 0 externa beroenden",
             "background": "",
             "note": "Demo — all data är fiktiv"
         },
@@ -22,21 +22,20 @@
             "words": ["Varje", "elev", "förtjänar", "att", "bli", "*sedd*"],
             "speed": 250,
             "finalPause": true,
-            "cardTitle": "📝 word-cascade",
-            "cardSubtitle": "Ord som faller ner ett i taget",
-            "demoNote": "Markera nyckelord med *asterisker* för extra landing-effekt"
+            "cardTitle": "word-cascade",
+            "cardSubtitle": "Ord som faller ner ett i taget"
         },
         {
             "id": "box-reveal-demo",
             "type": "box-reveal",
             "title": "Fyra pelare — DEMO",
             "boxes": [
-                { "icon": "🎯", "title": "Precision", "text": "Exempeltext — rätt stöd vid rätt tillfälle [FIKTIV]" },
-                { "icon": "⚡", "title": "Effektivitet", "text": "Exempeltext — mer tid för det mänskliga [FIKTIV]" },
-                { "icon": "🛡️", "title": "Säkerhet", "text": "Exempeltext — data stannar lokalt [FIKTIV]" },
-                { "icon": "🌱", "title": "Tillväxt", "text": "Exempeltext — kontinuerlig utveckling [FIKTIV]" }
+                { "title": "Precision", "text": "Exempeltext — rätt stöd vid rätt tillfälle [FIKTIV]" },
+                { "title": "Effektivitet", "text": "Exempeltext — mer tid för det mänskliga [FIKTIV]" },
+                { "title": "Säkerhet", "text": "Exempeltext — data stannar lokalt [FIKTIV]" },
+                { "title": "Tillväxt", "text": "Exempeltext — kontinuerlig utveckling [FIKTIV]" }
             ],
-            "cardTitle": "📦 box-reveal",
+            "cardTitle": "box-reveal",
             "cardSubtitle": "Boxar som bouncar in med glassmorphism"
         },
         {
@@ -51,7 +50,7 @@
                 "*Punkt fem — sista betonade punkten [FIKTIV]*"
             ],
             "interval": 700,
-            "cardTitle": "📋 bullet-build",
+            "cardTitle": "bullet-build",
             "cardSubtitle": "Punkter som glider in en i taget"
         },
         {
@@ -66,7 +65,7 @@
                 { "name": "Grupp B (demo)", "color": "#22c55e", "points": [8, 14, 20, 32, 48] },
                 { "name": "Grupp C (demo)", "color": "#f97316", "points": [3, 8, 18, 42, 65] }
             ],
-            "cardTitle": "📈 line-chart",
+            "cardTitle": "line-chart",
             "cardSubtitle": "SVG-linjer som ritas med dash-animation"
         },
         {
@@ -82,7 +81,7 @@
                 "items": ["8 min per enhet [FIKTIV]", "Konsekvent terminologi [FIKTIV]", "Individanpassat [FIKTIV]", "Kvaliteten håller hela vägen [FIKTIV]"]
             },
             "highlights": [0, 3],
-            "cardTitle": "⚖️ comparison",
+            "cardTitle": "comparison",
             "cardSubtitle": "Kolumner glider in från varsitt håll"
         },
         {
@@ -96,7 +95,7 @@
                 { "year": "STEG 4", "text": "Skalning — full implementation", "sub": "Illustrativ milstolpe [FIKTIV]" },
                 { "year": "STEG 5", "text": "Utvärdering — mätning och iteration", "sub": "Illustrativ milstolpe [FIKTIV]" }
             ],
-            "cardTitle": "📅 timeline-vertical",
+            "cardTitle": "timeline-vertical",
             "cardSubtitle": "Vertikal linje som ritas med noder"
         },
         {
@@ -108,7 +107,7 @@
             "unit": "%",
             "color": "#22c55e",
             "subtitle": "Illustrativt exempel: andel som nådde delmålet [FIKTIV]",
-            "cardTitle": "🔘 progress-ring",
+            "cardTitle": "progress-ring",
             "cardSubtitle": "Cirkulär mätare med countUp-animation"
         },
         {
@@ -116,12 +115,12 @@
             "type": "number-wall",
             "title": "I siffror — FIKTIV DATA",
             "numbers": [
-                { "value": 268, "label": "Fiktivt antal A", "icon": "📊" },
-                { "value": 17, "label": "Fiktivt antal B", "icon": "🎨" },
-                { "value": 9, "label": "Fiktivt antal C", "icon": "🧩" },
-                { "value": 0, "label": "Fiktivt antal D", "icon": "🔗" }
+                { "value": 268, "label": "Fiktivt antal A" },
+                { "value": 17, "label": "Fiktivt antal B" },
+                { "value": 9, "label": "Fiktivt antal C" },
+                { "value": 0, "label": "Fiktivt antal D" }
             ],
-            "cardTitle": "🔢 number-wall",
+            "cardTitle": "number-wall",
             "cardSubtitle": "Grid av siffror som räknar upp"
         },
         {
@@ -137,8 +136,69 @@
                 { "label": "Alternativ E", "value": 12, "color": "#ec4899" },
                 { "label": "Alternativ F", "value": 8, "color": "#14b8a6" }
             ],
-            "cardTitle": "📊 bar-race",
+            "cardTitle": "bar-race",
             "cardSubtitle": "Animerade staplar sorterade efter värde"
+        },
+        {
+            "id": "giant-text-demo",
+            "type": "giant-text",
+            "text": "Lärande måste få vara **ansträngande**.",
+            "align": "left",
+            "variant": "serif",
+            "entrance": "word-by-word",
+            "decoration": "?",
+            "cardTitle": "giant-text",
+            "cardSubtitle": "Stort uttalande med ord-för-ord-entré"
+        },
+        {
+            "id": "callout-demo",
+            "type": "callout",
+            "variant": "insight",
+            "tag": "NYCKELINSIKT",
+            "title": "Det handlar inte om verktyget — DEMO",
+            "body": "Det som verkligen spelar roll är om vi behåller frågan om varför i fokus. [FIKTIV]",
+            "items": ["Pedagogiskt syfte först", "Teknik som stöd, inte ersättning", "Alltid med en plan för uppföljning"],
+            "pulsate": false,
+            "cardTitle": "callout",
+            "cardSubtitle": "Framträdande ruta med 6 varianter"
+        },
+        {
+            "id": "section-divider-demo",
+            "type": "section-divider",
+            "number": "02",
+            "title": "Möjligheterna — DEMO",
+            "subtitle": "Vad kan AI faktiskt göra i klassrummet?",
+            "duration": "30 min",
+            "variant": "hero",
+            "progress": { "current": 2, "total": 5 },
+            "cardTitle": "section-divider",
+            "cardSubtitle": "Avsnittsövergång med nummer och progress"
+        },
+        {
+            "id": "hero-image-demo",
+            "type": "hero-image",
+            "src": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1600&q=80",
+            "title": "En vanlig tisdag — DEMO",
+            "subtitle": "Det här är där berättelsen börjar. [FIKTIV]",
+            "gradient": "bottom",
+            "textPosition": "bl",
+            "overlay": 0.3,
+            "kenBurns": true,
+            "cardTitle": "hero-image",
+            "cardSubtitle": "Fullbreddsbild med gradient och Ken Burns"
+        },
+        {
+            "id": "outro-demo",
+            "type": "outro",
+            "title": "Tack!",
+            "subtitle": "Hör av dig — bygg vidare. [DEMO]",
+            "contacts": ["demo@example.com", "example.com/material"],
+            "qrUrl": "https://hktcr.github.io/slidecraft-showcase/",
+            "qrCaption": "Showcase",
+            "cta": "Ta nästa steg",
+            "nextSteps": ["Testa Component Forge lokalt", "Bygg din första presentation", "Anpassa ett tema"],
+            "cardTitle": "outro",
+            "cardSubtitle": "Avslutning med QR-kod och kontaktinfo"
         }
     ]
 }

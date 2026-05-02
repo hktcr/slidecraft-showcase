@@ -1,10 +1,11 @@
 /**
- * SlideCraft Component Forge (P6) — Sprint 1+2+3
+ * SlideCraft Component Forge (P6) — Sprint 1+2+3+4
  * 
  * Drop-in module that registers animated slide types:
  *   Sprint 1: word-cascade, box-reveal, bullet-build
  *   Sprint 2: line-chart, comparison, timeline-vertical
  *   Sprint 3: progress-ring, number-wall, bar-race
+ *   Sprint 4: giant-text, callout, section-divider, hero-image, outro
  *
  * Usage: Add <script src="modules/component-forge/component-forge.js"></script>
  *        to any SlideCraft shell.html
@@ -577,6 +578,225 @@
             flex-wrap: wrap;
             align-content: center;
         }
+
+        /* ===== SPRINT 4: GIANT TEXT ===== */
+        @keyframes gtWordFade {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .slide-giant-text {
+            display: flex; flex-direction: column; align-items: flex-start;
+            justify-content: center; padding: 3rem 5rem; min-height: 70vh;
+            position: relative; overflow: hidden;
+        }
+        .slide-giant-text.gt-center { align-items: center; text-align: center; }
+        .slide-giant-text .gt-decoration {
+            position: absolute; right: 5%; top: 50%; transform: translateY(-50%);
+            font-size: clamp(15rem, 35vw, 45rem); font-weight: 900;
+            color: var(--accent, #f97316); opacity: 0.07; line-height: 1;
+            pointer-events: none; z-index: 0;
+        }
+        .slide-giant-text .gt-text {
+            position: relative; z-index: 1;
+            font-size: clamp(2.5rem, 7vw, 7rem); font-weight: 700;
+            line-height: 1.15; color: var(--text, #f1f5f9);
+        }
+        .slide-giant-text .gt-text .gt-bold {
+            color: var(--accent, #f97316); font-weight: 800;
+        }
+        .slide-giant-text .gt-text .gt-word {
+            display: inline-block; opacity: 0;
+            animation: gtWordFade 0.5s ease-out forwards;
+        }
+        .slide-giant-text.gt-serif .gt-text { font-family: Georgia, 'Times New Roman', serif; font-style: italic; }
+
+        /* ===== SPRINT 4: CALLOUT ===== */
+        @keyframes calloutEnter {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes calloutPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.1); }
+            50% { box-shadow: 0 0 25px 5px rgba(255,255,255,0.15); }
+        }
+        .slide-callout {
+            display: flex; align-items: center; justify-content: center;
+            padding: 3rem 5rem; min-height: 70vh;
+        }
+        .slide-callout .co-box {
+            max-width: 700px; padding: 2.5rem 3rem;
+            border-radius: 16px; border-left: 5px solid var(--co-color, var(--accent, #f97316));
+            background: rgba(255,255,255,0.06);
+            animation: calloutEnter 0.6s ease-out;
+        }
+        .slide-callout .co-box.co-pulsate {
+            animation: calloutEnter 0.6s ease-out, calloutPulse 3s ease-in-out 1s infinite;
+        }
+        .slide-callout .co-tag {
+            font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--co-color, var(--accent, #f97316)); margin-bottom: 0.5rem; font-weight: 600;
+        }
+        .slide-callout .co-title {
+            font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700;
+            color: var(--text, #f1f5f9); margin-bottom: 0.75rem;
+        }
+        .slide-callout .co-body {
+            font-size: 1.15rem; color: var(--text, #f1f5f9); opacity: 0.85; line-height: 1.6;
+        }
+        .slide-callout .co-items { list-style: none; padding: 0; margin: 0.75rem 0 0; }
+        .slide-callout .co-items li {
+            padding: 0.3rem 0; padding-left: 1.2rem; position: relative;
+            color: var(--text, #f1f5f9); opacity: 0.85;
+        }
+        .slide-callout .co-items li::before {
+            content: ''; position: absolute; left: 0; top: 0.7rem;
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--co-color, var(--accent, #f97316));
+        }
+
+        /* ===== SPRINT 4: SECTION DIVIDER ===== */
+        @keyframes sdNumberGlow {
+            0%, 100% { text-shadow: 0 0 40px rgba(255,255,255,0.1); }
+            50% { text-shadow: 0 0 80px var(--accent, #f97316); }
+        }
+        .slide-section-divider {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 3rem; min-height: 70vh; text-align: center;
+        }
+        .slide-section-divider .sd-number {
+            font-size: clamp(5rem, 15vw, 14rem); font-weight: 900;
+            color: var(--accent, #f97316); opacity: 0.3; line-height: 1;
+            animation: sdNumberGlow 4s ease-in-out infinite;
+        }
+        .slide-section-divider.sd-hero .sd-number { opacity: 0.5; }
+        .slide-section-divider .sd-title {
+            font-size: clamp(2rem, 5vw, 4rem); font-weight: 700;
+            color: var(--text, #f1f5f9); margin-top: -0.5rem;
+        }
+        .slide-section-divider .sd-subtitle {
+            font-size: 1.2rem; color: var(--text, #f1f5f9); opacity: 0.6;
+            margin-top: 0.5rem; max-width: 500px;
+        }
+        .slide-section-divider .sd-duration {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em;
+            color: var(--accent, #f97316); margin-top: 1rem; opacity: 0.7;
+        }
+        .slide-section-divider .sd-progress {
+            width: 200px; height: 3px; background: rgba(255,255,255,0.1);
+            border-radius: 3px; margin-top: 1.5rem; overflow: hidden;
+        }
+        .slide-section-divider .sd-progress-fill {
+            height: 100%; background: var(--accent, #f97316); border-radius: 3px;
+            transition: width 0.8s ease-out;
+        }
+
+        /* ===== SPRINT 4: HERO IMAGE ===== */
+        @keyframes hiKenBurns {
+            0% { transform: scale(1.05) translate(0, 0); }
+            50% { transform: scale(1.1) translate(-1%, -1%); }
+            100% { transform: scale(1.05) translate(0, 0); }
+        }
+        .slide-hero-image {
+            position: relative; min-height: 70vh; display: flex;
+            overflow: hidden;
+        }
+        .slide-hero-image .hi-bg {
+            position: absolute; inset: 0; background-size: cover;
+            background-position: center; z-index: 0;
+        }
+        .slide-hero-image .hi-bg.hi-kenburns { animation: hiKenBurns 15s ease-in-out infinite; }
+        .slide-hero-image .hi-gradient {
+            position: absolute; inset: 0; z-index: 1;
+        }
+        .slide-hero-image .hi-gradient.hi-grad-bottom {
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+        }
+        .slide-hero-image .hi-gradient.hi-grad-top {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, transparent 60%);
+        }
+        .slide-hero-image .hi-gradient.hi-grad-left {
+            background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, transparent 60%);
+        }
+        .slide-hero-image .hi-gradient.hi-grad-radial {
+            background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.7) 100%);
+        }
+        .slide-hero-image .hi-content {
+            position: relative; z-index: 2; padding: 3rem 4rem;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            width: 100%; max-width: 700px;
+        }
+        .slide-hero-image .hi-content.hi-pos-tl { justify-content: flex-start; align-self: flex-start; }
+        .slide-hero-image .hi-content.hi-pos-tc { justify-content: flex-start; align-self: center; text-align: center; }
+        .slide-hero-image .hi-content.hi-pos-tr { justify-content: flex-start; align-self: flex-end; }
+        .slide-hero-image .hi-content.hi-pos-cl { justify-content: center; align-self: flex-start; }
+        .slide-hero-image .hi-content.hi-pos-cc { justify-content: center; align-self: center; text-align: center; }
+        .slide-hero-image .hi-content.hi-pos-cr { justify-content: center; align-self: flex-end; }
+        .slide-hero-image .hi-content.hi-pos-bl { justify-content: flex-end; align-self: flex-start; }
+        .slide-hero-image .hi-content.hi-pos-bc { justify-content: flex-end; align-self: center; text-align: center; }
+        .slide-hero-image .hi-content.hi-pos-br { justify-content: flex-end; align-self: flex-end; text-align: right; }
+        .slide-hero-image .hi-title {
+            font-size: clamp(2rem, 5vw, 4rem); font-weight: 700;
+            color: #fff; text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+        .slide-hero-image .hi-subtitle {
+            font-size: 1.2rem; color: rgba(255,255,255,0.85); margin-top: 0.5rem;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+        }
+
+        /* ===== SPRINT 4: OUTRO ===== */
+        @keyframes outroFadeUp {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .slide-outro {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 3rem; min-height: 70vh; text-align: center;
+        }
+        .slide-outro .ou-title {
+            font-size: clamp(3rem, 8vw, 6rem); font-weight: 800;
+            color: var(--text, #f1f5f9); margin-bottom: 0.5rem;
+            animation: outroFadeUp 0.8s ease-out;
+        }
+        .slide-outro .ou-subtitle {
+            font-size: 1.3rem; color: var(--text, #f1f5f9); opacity: 0.7;
+            margin-bottom: 2rem; animation: outroFadeUp 0.8s ease-out 0.2s both;
+        }
+        .slide-outro .ou-contacts {
+            display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;
+            margin-bottom: 1.5rem; animation: outroFadeUp 0.8s ease-out 0.4s both;
+        }
+        .slide-outro .ou-contact {
+            font-size: 1rem; color: var(--accent, #f97316); opacity: 0.9;
+        }
+        .slide-outro .ou-qr-section {
+            display: flex; gap: 2rem; align-items: center;
+            animation: outroFadeUp 0.8s ease-out 0.6s both;
+        }
+        .slide-outro .ou-qr-block { text-align: center; }
+        .slide-outro .ou-qr-block img {
+            width: 140px; height: 140px; border-radius: 12px;
+            background: #fff; padding: 8px;
+        }
+        .slide-outro .ou-qr-caption {
+            font-size: 0.8rem; color: var(--text, #f1f5f9); opacity: 0.6; margin-top: 0.4rem;
+        }
+        .slide-outro .ou-cta {
+            margin-top: 1.5rem; font-size: 1.1rem; font-weight: 600;
+            color: var(--accent, #f97316);
+            animation: outroFadeUp 0.8s ease-out 0.8s both;
+        }
+        .slide-outro .ou-next-steps {
+            list-style: none; padding: 0; margin: 1rem 0 0;
+            animation: outroFadeUp 0.8s ease-out 0.7s both;
+        }
+        .slide-outro .ou-next-steps li {
+            padding: 0.3rem 0; color: var(--text, #f1f5f9); opacity: 0.8;
+        }
+        .slide-outro .ou-next-steps li::before {
+            content: ''; display: inline-block; width: 8px; height: 8px;
+            border-radius: 50%; background: var(--accent, #f97316);
+            margin-right: 0.7rem; vertical-align: middle;
+        }
     `;
     document.head.appendChild(style);
 
@@ -973,6 +1193,179 @@
         `;
     }
 
+    // ===== SPRINT 4 RENDERERS =====
+
+    /**
+     * giant-text — One big statement. **bold** = accent.
+     * Props: text, align ("left"|"center"), variant ("display"|"serif"),
+     *        entrance ("fade"|"word-by-word"|"instant"), decoration (string)
+     */
+    function renderGiantText(s) {
+        const align = s.align === 'center' ? 'gt-center' : '';
+        const variant = s.variant === 'serif' ? 'gt-serif' : '';
+        const entrance = s.entrance || 'word-by-word';
+        const deco = s.decoration ? `<div class="gt-decoration">${s.decoration}</div>` : '';
+
+        // Parse **bold** markers
+        const rawText = s.text || '';
+        const parts = rawText.split(/(\*\*[^*]+\*\*)/g);
+
+        let wordIndex = 0;
+        const htmlParts = parts.map(part => {
+            const isBold = part.startsWith('**') && part.endsWith('**');
+            const clean = isBold ? part.slice(2, -2) : part;
+            const words = clean.split(/\s+/).filter(w => w);
+            return words.map(w => {
+                const delay = entrance === 'word-by-word' ? `animation-delay: ${wordIndex++ * 0.12}s` : '';
+                const cls = isBold ? 'gt-word gt-bold' : 'gt-word';
+                const style = entrance === 'instant' ? 'opacity:1' : delay;
+                return `<span class="${cls}" style="${style}">${w} </span>`;
+            }).join('');
+        }).join('');
+
+        return `
+            <div class="slide-giant-text ${align} ${variant}">
+                ${deco}
+                <div class="gt-text">${htmlParts}</div>
+            </div>
+        `;
+    }
+
+    /**
+     * callout — Prominent box with variant color.
+     * Props: variant ("insight"|"info"|"warning"|"success"|"danger"|"quote"),
+     *        title, tag, body, items[], pulsate (bool)
+     */
+    function renderCallout(s) {
+        const colorMap = {
+            insight: 'var(--accent, #06b6d4)',
+            info: 'var(--accent, #06b6d4)',
+            quote: 'var(--accent, #06b6d4)',
+            warning: '#f59e0b',
+            success: '#10b981',
+            danger: '#ef4444'
+        };
+        const tagMap = {
+            insight: 'NYCKELINSIKT', info: 'INFO', warning: 'VARNING',
+            success: 'FRAMGÅNG', danger: 'VARNING', quote: 'CITAT'
+        };
+        const variant = s.variant || 'insight';
+        const color = colorMap[variant] || colorMap.insight;
+        const tag = s.tag || tagMap[variant] || '';
+        const pulsate = (s.pulsate || variant === 'warning' || variant === 'danger') ? 'co-pulsate' : '';
+
+        let itemsHtml = '';
+        if (s.items && s.items.length) {
+            itemsHtml = `<ul class="co-items">${s.items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+        }
+
+        return `
+            <div class="slide-callout">
+                <div class="co-box ${pulsate}" style="--co-color: ${color}">
+                    ${tag ? `<div class="co-tag">${tag}</div>` : ''}
+                    ${s.title ? `<div class="co-title">${s.title}</div>` : ''}
+                    ${s.body ? `<div class="co-body">${s.body}</div>` : ''}
+                    ${itemsHtml}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * section-divider — Section break with number + title.
+     * Props: number, title, subtitle, duration, variant ("centered"|"hero"|"left"),
+     *        progress { current, total }
+     */
+    function renderSectionDivider(s) {
+        const variant = s.variant === 'hero' ? 'sd-hero' : '';
+        const number = s.number || '';
+        let progressHtml = '';
+        if (s.progress) {
+            const pct = Math.round((s.progress.current / s.progress.total) * 100);
+            progressHtml = `
+                <div class="sd-progress">
+                    <div class="sd-progress-fill" style="width: ${pct}%"></div>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="slide-section-divider ${variant}">
+                ${number ? `<div class="sd-number">${number}</div>` : ''}
+                <div class="sd-title">${s.title || ''}</div>
+                ${s.subtitle ? `<div class="sd-subtitle">${s.subtitle}</div>` : ''}
+                ${s.duration ? `<div class="sd-duration">${s.duration}</div>` : ''}
+                ${progressHtml}
+            </div>
+        `;
+    }
+
+    /**
+     * hero-image — Full-bleed image with text overlay.
+     * Props: src, title, subtitle, gradient ("bottom"|"top"|"left"|"radial"|"none"),
+     *        textPosition ("bl"|"bc"|"br"|"tl"|"tc"|"tr"|"cl"|"cc"|"cr"),
+     *        overlay (0-1), kenBurns (bool)
+     */
+    function renderHeroImage(s) {
+        const gradient = s.gradient || 'bottom';
+        const pos = s.textPosition || 'bl';
+        const overlay = s.overlay != null ? s.overlay : 0.35;
+        const kb = s.kenBurns ? 'hi-kenburns' : '';
+        const gradClass = gradient !== 'none' ? `hi-grad-${gradient}` : '';
+
+        return `
+            <div class="slide-hero-image">
+                <div class="hi-bg ${kb}" style="background-image: url('${s.src || ''}');
+                    filter: brightness(${1 - overlay});"></div>
+                ${gradClass ? `<div class="hi-gradient ${gradClass}"></div>` : ''}
+                <div class="hi-content hi-pos-${pos}">
+                    ${s.title ? `<div class="hi-title">${s.title}</div>` : ''}
+                    ${s.subtitle ? `<div class="hi-subtitle">${s.subtitle}</div>` : ''}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * outro — Closing slide with title, contacts, QR code(s), CTA.
+     * Props: title, subtitle, contacts[] (strings), qrUrl, qrCaption,
+     *        secondaryQrUrl, secondaryQrCaption, cta, nextSteps[]
+     */
+    function renderOutro(s) {
+        const title = s.title || 'Tack!';
+        const qrSize = 150;
+        const qrApi = (url) => `https://api.qrserver.com/v1/create-qr-code/?size=${qrSize}x${qrSize}&data=${encodeURIComponent(url)}&bgcolor=ffffff&color=000000`;
+
+        let contactsHtml = '';
+        if (s.contacts && s.contacts.length) {
+            contactsHtml = `<div class="ou-contacts">${s.contacts.map(c => `<span class="ou-contact">${c}</span>`).join('')}</div>`;
+        }
+
+        let qrHtml = '';
+        if (s.qrUrl) {
+            qrHtml += `<div class="ou-qr-block"><img src="${qrApi(s.qrUrl)}" alt="QR"><div class="ou-qr-caption">${s.qrCaption || s.qrUrl}</div></div>`;
+        }
+        if (s.secondaryQrUrl) {
+            qrHtml += `<div class="ou-qr-block"><img src="${qrApi(s.secondaryQrUrl)}" alt="QR"><div class="ou-qr-caption">${s.secondaryQrCaption || s.secondaryQrUrl}</div></div>`;
+        }
+
+        let nextStepsHtml = '';
+        if (s.nextSteps && s.nextSteps.length) {
+            nextStepsHtml = `<ul class="ou-next-steps">${s.nextSteps.map(n => `<li>${n}</li>`).join('')}</ul>`;
+        }
+
+        return `
+            <div class="slide-outro">
+                <div class="ou-title">${title}</div>
+                ${s.subtitle ? `<div class="ou-subtitle">${s.subtitle}</div>` : ''}
+                ${contactsHtml}
+                ${qrHtml ? `<div class="ou-qr-section">${qrHtml}</div>` : ''}
+                ${nextStepsHtml}
+                ${s.cta ? `<div class="ou-cta">${s.cta}</div>` : ''}
+            </div>
+        `;
+    }
+
     // ===== MONKEY-PATCH REGISTRY =====
     const allTypes = {
         'word-cascade': renderWordCascade,
@@ -983,7 +1376,13 @@
         'timeline-vertical': renderTimelineVertical,
         'progress-ring': renderProgressRing,
         'number-wall': renderNumberWall,
-        'bar-race': renderBarRace
+        'bar-race': renderBarRace,
+        // Sprint 4
+        'giant-text': renderGiantText,
+        'callout': renderCallout,
+        'section-divider': renderSectionDivider,
+        'hero-image': renderHeroImage,
+        'outro': renderOutro
     };
 
     function registerTypes() {
