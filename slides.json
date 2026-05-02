@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "SlideCraft Component Forge — Showcase",
-        "subtitle": "27 animerade slide-typer · 17 teman · Noll beroenden",
+        "subtitle": "28 animerade slide-typer · 17 teman · Noll beroenden",
         "version": "2.0",
         "date": "2026-05-02",
         "note": "⚠️ ALL DATA PÅ DESSA SLIDES ÄR FIKTIV/DEMO — siffror, citat och påståenden är illustrativa exempel."
@@ -11,7 +11,7 @@
             "id": "title",
             "type": "title",
             "title": "SlideCraft Component Forge",
-            "subtitle": "27 animerade slide-typer · 17 teman · 0 externa beroenden",
+            "subtitle": "28 animerade slide-typer · 17 teman · 0 externa beroenden",
             "background": "",
             "note": "Demo — all data är fiktiv"
         },
@@ -373,6 +373,19 @@
             ],
             "cardTitle": "mindmap",
             "cardSubtitle": "Interaktiv konceptkarta med klickbara noder"
+        },
+        {
+            "id": "letter-morph-demo",
+            "type": "letter-morph",
+            "phrases": [
+                "AI förändrar allt",
+                "Men vad förändrar vi?",
+                "Lärandet är kvar",
+                "Verktygen är nya",
+                "Tack för idag"
+            ],
+            "cardTitle": "letter-morph",
+            "cardSubtitle": "Bokstäver som bildar ord (klicka för nästa)"
         }
     ]
 }

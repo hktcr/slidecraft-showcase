@@ -9,6 +9,7 @@
  *   Sprint 5: ai-conversation, before-after, prompt-reveal, pitfall
  *   Sprint 6: stat-compare, voice-collage, portrait-quote, reflection
  *   Sprint 7+8: collage, process-chain, acronym-list, map-pins, mindmap
+ *   Signature: letter-morph (Håkan-original)
  *
  * Usage: Add <script src="modules/component-forge/component-forge.js"></script>
  *        to any SlideCraft shell.html
@@ -1345,6 +1346,34 @@
         .slide-mindmap .mm-lines line {
             stroke: rgba(255,255,255,0.12); stroke-width: 1;
         }
+
+        /* ===== SIGNATURE: LETTER MORPH ===== */
+        .slide-letter-morph {
+            position: relative; min-height: 70vh; width: 100%;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden; cursor: pointer; user-select: none;
+        }
+        .slide-letter-morph .lm-letter {
+            position: absolute; font-family: 'Inter', sans-serif;
+            font-weight: 700; pointer-events: none;
+            transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .slide-letter-morph .lm-letter.lm-active {
+            color: var(--text, #f1f5f9);
+        }
+        .slide-letter-morph .lm-letter.lm-frame {
+            color: var(--accent, #f97316); opacity: 0.12;
+        }
+        .slide-letter-morph .lm-hint {
+            position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            font-size: 0.7rem; color: var(--text, #f1f5f9); opacity: 0.3;
+            letter-spacing: 0.1em; text-transform: uppercase;
+        }
+        .slide-letter-morph .lm-counter {
+            position: absolute; top: 1rem; right: 1.5rem;
+            font-size: 0.7rem; color: var(--accent, #f97316); opacity: 0.5;
+            font-family: 'JetBrains Mono', monospace;
+        }
     `;
     document.head.appendChild(style);
 
@@ -2281,6 +2310,148 @@
         `;
     }
 
+    // ===== SIGNATURE: LETTER MORPH =====
+
+    /**
+     * letter-morph — Scattered letters form words, unused become elliptical frame.
+     * Props: phrases[] (array of strings), alphabet (optional extra letters)
+     * Click to cycle through phrases.
+     */
+    function renderLetterMorph(s) {
+        const id = 'lm-' + Math.random().toString(36).slice(2, 8);
+        const phrases = s.phrases || ['Hej världen'];
+        const totalLetters = 80; // total scattered letters
+
+        return `
+            <div class="slide-letter-morph" id="${id}">
+                <div class="lm-hint">Klicka för nästa</div>
+                <div class="lm-counter"></div>
+            </div>
+            <script>
+            (function() {
+                const el = document.getElementById('${id}');
+                if (!el) return;
+                const phrases = ${JSON.stringify(phrases)};
+                const total = ${totalLetters};
+                let phraseIdx = 0;
+                let letters = [];
+                const W = () => el.offsetWidth || 800;
+                const H = () => el.offsetHeight || 500;
+
+                // Seeded random for deterministic scatter
+                let seed = 42;
+                function rng() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+                // All possible chars
+                const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ';
+
+                function createLetters() {
+                    // Remove old
+                    letters.forEach(l => l.el && l.el.remove());
+                    letters = [];
+                    seed = 42;
+
+                    for (let i = 0; i < total; i++) {
+                        const span = document.createElement('span');
+                        span.className = 'lm-letter';
+                        span.textContent = alphabet[Math.floor(rng() * alphabet.length)];
+                        span.style.fontSize = (14 + rng() * 20) + 'px';
+                        // Start scattered
+                        span.style.left = (rng() * 90 + 5) + '%';
+                        span.style.top = (rng() * 85 + 5) + '%';
+                        span.style.opacity = '0.08';
+                        span.style.transform = 'rotate(' + (rng() * 60 - 30) + 'deg)';
+                        el.appendChild(span);
+                        letters.push({ el: span, char: '', role: 'scatter' });
+                    }
+                }
+
+                function morphTo(phrase) {
+                    const chars = phrase.toUpperCase().split('');
+                    const activeChars = chars.filter(c => c !== ' ');
+                    const cx = 50, cy = 50;
+
+                    // Layout: place phrase letters in center, spaced
+                    const fontSize = Math.min(3.5, 40 / Math.max(chars.length, 1));
+                    const charWidth = fontSize * 0.65; // approx em
+                    const totalWidth = chars.length * charWidth;
+                    const startX = cx - totalWidth / 2;
+
+                    let charIdx = 0;
+                    let usedCount = 0;
+
+                    // Assign phrase chars to first N letters
+                    chars.forEach((c, i) => {
+                        if (c === ' ') return; // skip spaces
+                        if (usedCount < letters.length) {
+                            const l = letters[usedCount];
+                            l.el.textContent = c;
+                            l.el.className = 'lm-letter lm-active';
+                            l.el.style.fontSize = fontSize + 'rem';
+                            l.el.style.opacity = '1';
+                            l.el.style.transform = 'rotate(0deg)';
+                            // Position: account for spaces
+                            const xPos = startX + i * charWidth;
+                            l.el.style.left = xPos + '%';
+                            l.el.style.top = cy + '%';
+                            l.role = 'active';
+                            usedCount++;
+                        }
+                    });
+
+                    // Remaining letters: form elliptical frame
+                    const remaining = letters.length - usedCount;
+                    for (let i = usedCount; i < letters.length; i++) {
+                        const l = letters[i];
+                        const frameIdx = i - usedCount;
+                        const angle = (frameIdx / remaining) * Math.PI * 2;
+                        const rx = 42, ry = 38; // ellipse radii in %
+                        const fx = cx + Math.cos(angle) * rx;
+                        const fy = cy + Math.sin(angle) * ry;
+
+                        l.el.textContent = alphabet[Math.floor(Math.abs(Math.sin(frameIdx * 7.3)) * alphabet.length)];
+                        l.el.className = 'lm-letter lm-frame';
+                        l.el.style.fontSize = (0.7 + Math.abs(Math.sin(angle)) * 0.5) + 'rem';
+                        l.el.style.opacity = '';
+                        l.el.style.transform = 'rotate(' + Math.round(Math.sin(angle) * 15) + 'deg)';
+                        l.el.style.left = fx + '%';
+                        l.el.style.top = fy + '%';
+                        l.role = 'frame';
+                    }
+
+                    // Update counter
+                    const counter = el.querySelector('.lm-counter');
+                    if (counter) counter.textContent = (phraseIdx + 1) + ' / ' + phrases.length;
+                }
+
+                function next() {
+                    // Brief scatter before morphing
+                    seed = phraseIdx * 137 + 42;
+                    letters.forEach(l => {
+                        l.el.style.left = (5 + Math.abs(Math.sin(seed++ * 3.7)) * 90) + '%';
+                        l.el.style.top = (5 + Math.abs(Math.cos(seed++ * 2.3)) * 85) + '%';
+                        l.el.style.opacity = '0.06';
+                        l.el.style.transform = 'rotate(' + ((seed % 60) - 30) + 'deg)';
+                        l.el.className = 'lm-letter';
+                    });
+
+                    setTimeout(() => morphTo(phrases[phraseIdx]), 400);
+                }
+
+                createLetters();
+                // Initial morph after scatter
+                setTimeout(() => morphTo(phrases[0]), 600);
+
+                el.addEventListener('click', (e) => {
+                    if (e.target.closest('.lm-hint') || e.target.closest('.lm-counter')) return;
+                    phraseIdx = (phraseIdx + 1) % phrases.length;
+                    next();
+                });
+            })();
+            <\/script>
+        `;
+    }
+
     // ===== MONKEY-PATCH REGISTRY =====
     const allTypes = {
         'word-cascade': renderWordCascade,
@@ -2313,7 +2484,9 @@
         'process-chain': renderProcessChain,
         'acronym-list': renderAcronymList,
         'map-pins': renderMapPins,
-        'mindmap': renderMindmap
+        'mindmap': renderMindmap,
+        // Signature
+        'letter-morph': renderLetterMorph
     };
 
     function registerTypes() {
