@@ -1,0 +1,144 @@
+{
+    "meta": {
+        "title": "SlideCraft Component Forge — Showcase",
+        "subtitle": "9 animerade slide-typer · 17 teman · Noll beroenden",
+        "version": "1.0",
+        "date": "2026-05-02",
+        "note": "⚠️ ALL DATA PÅ DESSA SLIDES ÄR FIKTIV/DEMO — siffror, citat och påståenden är illustrativa exempel."
+    },
+    "slides": [
+        {
+            "id": "title",
+            "type": "title",
+            "title": "SlideCraft Component Forge",
+            "subtitle": "9 animerade slide-typer · 17 teman · 0 externa beroenden",
+            "background": "",
+            "note": "Demo — all data är fiktiv"
+        },
+        {
+            "id": "word-cascade-demo",
+            "type": "word-cascade",
+            "title": "word-cascade",
+            "words": ["Varje", "elev", "förtjänar", "att", "bli", "*sedd*"],
+            "speed": 250,
+            "finalPause": true,
+            "cardTitle": "📝 word-cascade",
+            "cardSubtitle": "Ord som faller ner ett i taget",
+            "demoNote": "Markera nyckelord med *asterisker* för extra landing-effekt"
+        },
+        {
+            "id": "box-reveal-demo",
+            "type": "box-reveal",
+            "title": "Fyra pelare — DEMO",
+            "boxes": [
+                { "icon": "🎯", "title": "Precision", "text": "Exempeltext — rätt stöd vid rätt tillfälle [FIKTIV]" },
+                { "icon": "⚡", "title": "Effektivitet", "text": "Exempeltext — mer tid för det mänskliga [FIKTIV]" },
+                { "icon": "🛡️", "title": "Säkerhet", "text": "Exempeltext — data stannar lokalt [FIKTIV]" },
+                { "icon": "🌱", "title": "Tillväxt", "text": "Exempeltext — kontinuerlig utveckling [FIKTIV]" }
+            ],
+            "cardTitle": "📦 box-reveal",
+            "cardSubtitle": "Boxar som bouncar in med glassmorphism"
+        },
+        {
+            "id": "bullet-build-demo",
+            "type": "bullet-build",
+            "title": "Fem insikter — DEMO",
+            "items": [
+                "Punkt ett — illustrativt exempel [FIKTIV]",
+                "*Punkt två — betonad med asterisker [FIKTIV]*",
+                "Punkt tre med undertitel|Undertiteln visas mindre, under huvudtexten [FIKTIV]",
+                "Punkt fyra — vanlig text [FIKTIV]",
+                "*Punkt fem — sista betonade punkten [FIKTIV]*"
+            ],
+            "interval": 700,
+            "cardTitle": "📋 bullet-build",
+            "cardSubtitle": "Punkter som glider in en i taget"
+        },
+        {
+            "id": "line-chart-demo",
+            "type": "line-chart",
+            "title": "Trendexempel 2020–2024 — FIKTIV DATA",
+            "xLabel": "År",
+            "yLabel": "Procent (%)",
+            "labels": ["2020", "2021", "2022", "2023", "2024"],
+            "series": [
+                { "name": "Grupp A (demo)", "color": "#6366f1", "points": [12, 18, 25, 38, 56] },
+                { "name": "Grupp B (demo)", "color": "#22c55e", "points": [8, 14, 20, 32, 48] },
+                { "name": "Grupp C (demo)", "color": "#f97316", "points": [3, 8, 18, 42, 65] }
+            ],
+            "cardTitle": "📈 line-chart",
+            "cardSubtitle": "SVG-linjer som ritas med dash-animation"
+        },
+        {
+            "id": "comparison-demo",
+            "type": "comparison",
+            "title": "Jämförelse: Före vs. Efter — DEMO",
+            "left": {
+                "label": "Före",
+                "items": ["40 min per enhet [FIKTIV]", "Inkonsekvent resultat [FIKTIV]", "Generisk output [FIKTIV]", "Kvalitet sjunker mot slutet [FIKTIV]"]
+            },
+            "right": {
+                "label": "Efter",
+                "items": ["8 min per enhet [FIKTIV]", "Konsekvent terminologi [FIKTIV]", "Individanpassat [FIKTIV]", "Kvaliteten håller hela vägen [FIKTIV]"]
+            },
+            "highlights": [0, 3],
+            "cardTitle": "⚖️ comparison",
+            "cardSubtitle": "Kolumner glider in från varsitt håll"
+        },
+        {
+            "id": "timeline-vertical-demo",
+            "type": "timeline-vertical",
+            "title": "Händelseförlopp — FIKTIV TIDSLINJE",
+            "nodes": [
+                { "year": "STEG 1", "text": "Initiering — projektet startar", "sub": "Illustrativ milstolpe [FIKTIV]" },
+                { "year": "STEG 2", "text": "Prototyp — första versionen testas", "sub": "Illustrativ milstolpe [FIKTIV]" },
+                { "year": "STEG 3", "text": "Pilot — begränsad utrullning", "sub": "Illustrativ milstolpe [FIKTIV]" },
+                { "year": "STEG 4", "text": "Skalning — full implementation", "sub": "Illustrativ milstolpe [FIKTIV]" },
+                { "year": "STEG 5", "text": "Utvärdering — mätning och iteration", "sub": "Illustrativ milstolpe [FIKTIV]" }
+            ],
+            "cardTitle": "📅 timeline-vertical",
+            "cardSubtitle": "Vertikal linje som ritas med noder"
+        },
+        {
+            "id": "progress-ring-demo",
+            "type": "progress-ring",
+            "title": "Framstegsmätare — FIKTIV DATA",
+            "value": 73,
+            "max": 100,
+            "unit": "%",
+            "color": "#22c55e",
+            "subtitle": "Illustrativt exempel: andel som nådde delmålet [FIKTIV]",
+            "cardTitle": "🔘 progress-ring",
+            "cardSubtitle": "Cirkulär mätare med countUp-animation"
+        },
+        {
+            "id": "number-wall-demo",
+            "type": "number-wall",
+            "title": "I siffror — FIKTIV DATA",
+            "numbers": [
+                { "value": 268, "label": "Fiktivt antal A", "icon": "📊" },
+                { "value": 17, "label": "Fiktivt antal B", "icon": "🎨" },
+                { "value": 9, "label": "Fiktivt antal C", "icon": "🧩" },
+                { "value": 0, "label": "Fiktivt antal D", "icon": "🔗" }
+            ],
+            "cardTitle": "🔢 number-wall",
+            "cardSubtitle": "Grid av siffror som räknar upp"
+        },
+        {
+            "id": "bar-race-demo",
+            "type": "bar-race",
+            "title": "Ranking — FIKTIV DATA",
+            "unit": "%",
+            "items": [
+                { "label": "Alternativ A", "value": 78, "color": "#6366f1" },
+                { "label": "Alternativ B", "value": 45, "color": "#22c55e" },
+                { "label": "Alternativ C", "value": 38, "color": "#f97316" },
+                { "label": "Alternativ D", "value": 22, "color": "#a855f7" },
+                { "label": "Alternativ E", "value": 12, "color": "#ec4899" },
+                { "label": "Alternativ F", "value": 8, "color": "#14b8a6" }
+            ],
+            "cardTitle": "📊 bar-race",
+            "cardSubtitle": "Animerade staplar sorterade efter värde"
+        }
+    ]
+}
