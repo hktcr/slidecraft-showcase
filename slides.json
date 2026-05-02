@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "SlideCraft Component Forge — Showcase",
-        "subtitle": "28 animerade slide-typer · 17 teman · Noll beroenden",
+        "subtitle": "30 animerade slide-typer · 17 teman · Noll beroenden",
         "version": "2.0",
         "date": "2026-05-02",
         "note": "⚠️ ALL DATA PÅ DESSA SLIDES ÄR FIKTIV/DEMO — siffror, citat och påståenden är illustrativa exempel."
@@ -11,7 +11,7 @@
             "id": "title",
             "type": "title",
             "title": "SlideCraft Component Forge",
-            "subtitle": "28 animerade slide-typer · 17 teman · 0 externa beroenden",
+            "subtitle": "30 animerade slide-typer · 17 teman · 0 externa beroenden",
             "background": "",
             "note": "Demo — all data är fiktiv"
         },
@@ -386,6 +386,42 @@
             ],
             "cardTitle": "letter-morph",
             "cardSubtitle": "Bokstäver som bildar ord (klicka för nästa)"
+        },
+        {
+            "id": "map-journey-demo",
+            "type": "map-journey",
+            "title": "Fågelsträck: Fiskgjuse",
+            "mapImage": "https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+            "points": [
+                { "label": "Åstorp (April)", "x": 50, "y": 20 },
+                { "label": "Alperna (September)", "x": 53, "y": 45 },
+                { "label": "Medelhavet (Oktober)", "x": 55, "y": 60 },
+                { "label": "Västafrika (November)", "x": 45, "y": 85 }
+            ],
+            "cardTitle": "map-journey",
+            "cardSubtitle": "Stiliserad karta med animerad rutt"
+        },
+        {
+            "id": "mindmap-tree-demo",
+            "type": "mindmap-tree",
+            "title": "Biologins Grunder",
+            "root": "Livets kännetecken",
+            "branches": [
+                {
+                    "label": "Ämnesomsättning",
+                    "leaves": ["Cellandning", "Fotosyntes"]
+                },
+                {
+                    "label": "Förökning",
+                    "leaves": ["Sexuell", "Asexuell", "Kloning"]
+                },
+                {
+                    "label": "Känslighet",
+                    "leaves": ["Nervsystem", "Sinnen"]
+                }
+            ],
+            "cardTitle": "mindmap-tree",
+            "cardSubtitle": "Hierarkisk mindmap i tre nivåer"
         }
     ]
 }

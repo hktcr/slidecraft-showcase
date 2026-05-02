@@ -1362,6 +1362,26 @@
             stroke: rgba(255,255,255,0.12); stroke-width: 1;
         }
 
+        /* ===== SPRINT 7+8 BONUS: MAP JOURNEY ===== */
+        .slide-map-journey { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; }
+        .slide-map-journey .mj-container { position: relative; width: 90%; margin: auto; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .slide-map-journey img { width: 100%; display: block; filter: brightness(0.8) contrast(1.2) grayscale(0.5); }
+        .slide-map-journey .mj-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .slide-map-journey .mj-path { fill: none; stroke: var(--accent, #f97316); stroke-width: 3px; stroke-dasharray: 10 10; animation: mjDash 20s linear infinite; }
+        @keyframes mjDash { to { stroke-dashoffset: -1000; } }
+        .slide-map-journey .mj-pin { position: absolute; width: 20px; height: 20px; background: var(--accent); border-radius: 50%; border: 3px solid #fff; transform: translate(-50%, -50%); box-shadow: 0 0 15px var(--accent); z-index: 2; }
+        .slide-map-journey .mj-label { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); margin-top: 8px; background: rgba(0,0,0,0.8); color: #fff; padding: 4px 10px; border-radius: 6px; font-size: 0.8rem; white-space: nowrap; font-weight: 600; }
+
+        /* ===== SPRINT 7+8 BONUS: MINDMAP TREE ===== */
+        .slide-mindmap-tree { position: relative; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .slide-mindmap-tree .mt-canvas { position: relative; width: 90%; height: 80%; }
+        .slide-mindmap-tree .mt-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .slide-mindmap-tree .mt-node { position: absolute; padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; font-weight: 600; font-size: 1rem; color: #fff; transform: translate(-50%, -50%); backdrop-filter: blur(10px); z-index: 2; transition: all 0.3s; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .slide-mindmap-tree .mt-node:hover { transform: translate(-50%, -50%) scale(1.05); background: rgba(255,255,255,0.1); }
+        .slide-mindmap-tree .mt-root { background: rgba(249,115,22,0.2); border-color: var(--accent); font-size: 1.2rem; color: var(--accent); }
+        .slide-mindmap-tree .mt-branch { background: rgba(34,211,238,0.15); border-color: #22d3ee; }
+        .slide-mindmap-tree .mt-leaf { background: rgba(168,85,247,0.15); border-color: #a855f7; font-size: 0.9rem; font-weight: 400; }
+
         /* ===== SIGNATURE: LETTER MORPH ===== */
         .slide-letter-morph {
             position: relative; min-height: 70vh; width: 100%;
@@ -2462,6 +2482,81 @@
         `;
     }
 
+    /**
+     * map-journey — Stylized map with an animated route connecting pins.
+     * Props: title, mapImage, points[] ({ label, x, y })
+     */
+    function renderMapJourney(s) {
+        const points = s.points || [];
+        const pathData = points.length > 0 ? 'M ' + points.map(p => `${p.x} ${p.y}`).join(' L ') : '';
+        
+        const pinHtml = points.map(p => `
+            <div class="mj-pin" style="left:${p.x}%; top:${p.y}%;">
+                <div class="mj-label">${p.label}</div>
+            </div>
+        `).join('');
+
+        return `
+            <div class="slide-map-journey">
+                ${s.title ? `<div class="mj-title" style="padding: 2rem; font-size: 2rem; font-weight: bold; color: var(--accent, #f97316);">${s.title}</div>` : ''}
+                <div class="mj-container">
+                    <img src="${s.mapImage || ''}" alt="Map">
+                    <svg class="mj-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path class="mj-path" d="${pathData}" vector-effect="non-scaling-stroke" />
+                    </svg>
+                    ${pinHtml}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * mindmap-tree — Multi-level hierarchical mindmap with curved connections.
+     * Props: title, root (string), branches[] ({ label, leaves: [string] })
+     */
+    function renderMindmapTree(s) {
+        const root = s.root || 'Root';
+        const branches = s.branches || [];
+        
+        let html = '';
+        let svg = '';
+        
+        // Root at left center
+        const rootX = 15;
+        const rootY = 50;
+        html += `<div class="mt-node mt-root" style="left:${rootX}%; top:${rootY}%;">${root}</div>`;
+        
+        const branchX = 45;
+        const leafX = 85;
+        
+        branches.forEach((b, i) => {
+            const branchY = 20 + (60 / Math.max(1, branches.length - 1)) * i;
+            // Line from root to branch
+            svg += `<path d="M ${rootX} ${rootY} C ${rootX+15} ${rootY}, ${branchX-15} ${branchY}, ${branchX} ${branchY}" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2" />`;
+            html += `<div class="mt-node mt-branch" style="left:${branchX}%; top:${branchY}%;">${b.label}</div>`;
+            
+            if (b.leaves && b.leaves.length > 0) {
+                b.leaves.forEach((l, j) => {
+                    const leafOffset = (j - (b.leaves.length-1)/2) * 12; // vertical spread
+                    const leafY = branchY + leafOffset;
+                    // Line from branch to leaf
+                    svg += `<path d="M ${branchX} ${branchY} C ${branchX+15} ${branchY}, ${leafX-15} ${leafY}, ${leafX} ${leafY}" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-dasharray="4 4" />`;
+                    html += `<div class="mt-node mt-leaf" style="left:${leafX}%; top:${leafY}%;">${l}</div>`;
+                });
+            }
+        });
+
+        return `
+            <div class="slide-mindmap-tree">
+                ${s.title ? `<div class="mt-title" style="position:absolute; top:2rem; left:3rem; font-size:2rem; font-weight:bold; color:var(--text, #f1f5f9);">${s.title}</div>` : ''}
+                <div class="mt-canvas">
+                    <svg class="mt-svg" viewBox="0 0 100 100" preserveAspectRatio="none">${svg}</svg>
+                    ${html}
+                </div>
+            </div>
+        `;
+    }
+
     // ===== MONKEY-PATCH REGISTRY =====
     const allTypes = {
         'word-cascade': renderWordCascade,
@@ -2495,6 +2590,8 @@
         'acronym-list': renderAcronymList,
         'map-pins': renderMapPins,
         'mindmap': renderMindmap,
+        'map-journey': renderMapJourney,
+        'mindmap-tree': renderMindmapTree,
         // Signature
         'letter-morph': renderLetterMorph
     };
