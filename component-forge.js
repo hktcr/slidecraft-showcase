@@ -8,6 +8,7 @@
  *   Sprint 4: giant-text, callout, section-divider, hero-image, outro
  *   Sprint 5: ai-conversation, before-after, prompt-reveal, pitfall
  *   Sprint 6: stat-compare, voice-collage, portrait-quote, reflection
+ *   Sprint 7+8: collage, process-chain, acronym-list, map-pins, mindmap
  *
  * Usage: Add <script src="modules/component-forge/component-forge.js"></script>
  *        to any SlideCraft shell.html
@@ -1154,6 +1155,196 @@
             width: 8px; height: 8px; border-radius: 50%;
             background: var(--accent, #f97316);
         }
+
+        /* ===== SPRINT 7+8: COLLAGE ===== */
+        @keyframes colImgIn {
+            0% { opacity: 0; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .slide-collage {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 2rem 3rem; min-height: 70vh;
+        }
+        .slide-collage .col-title {
+            font-size: 1.3rem; font-weight: 700; color: var(--text, #f1f5f9);
+            margin-bottom: 1rem;
+        }
+        .slide-collage .col-grid {
+            display: grid; gap: 0.5rem; width: 100%; max-width: 900px;
+        }
+        .slide-collage .col-grid.col-2 { grid-template-columns: 1fr 1fr; }
+        .slide-collage .col-grid.col-3 { grid-template-columns: 1fr 1fr 1fr; }
+        .slide-collage .col-grid.col-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+        .slide-collage .col-img {
+            width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 10px;
+            opacity: 0; animation: colImgIn 0.5s ease-out forwards;
+            cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .slide-collage .col-img:hover { transform: scale(1.03); box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+
+        /* ===== SPRINT 7+8: PROCESS CHAIN ===== */
+        @keyframes pcNodeIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .slide-process-chain {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 2rem 3rem; min-height: 70vh;
+        }
+        .slide-process-chain .pc-title {
+            font-size: 1.3rem; font-weight: 700; color: var(--text, #f1f5f9);
+            margin-bottom: 1.5rem;
+        }
+        .slide-process-chain .pc-chain {
+            display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+            justify-content: center;
+        }
+        .slide-process-chain .pc-node {
+            padding: 0.8rem 1.2rem; background: rgba(255,255,255,0.06);
+            border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+            text-align: center; opacity: 0; animation: pcNodeIn 0.4s ease-out forwards;
+            min-width: 100px;
+        }
+        .slide-process-chain .pc-node.pc-active {
+            border-color: var(--accent, #f97316);
+            box-shadow: 0 0 15px rgba(249,115,22,0.2);
+        }
+        .slide-process-chain .pc-node-label {
+            font-size: 0.95rem; font-weight: 700; color: var(--text, #f1f5f9);
+        }
+        .slide-process-chain .pc-node-hint {
+            font-size: 0.75rem; color: var(--text, #f1f5f9); opacity: 0.5; margin-top: 0.2rem;
+        }
+        .slide-process-chain .pc-arrow {
+            color: var(--accent, #f97316); font-size: 1.2rem; opacity: 0.5;
+        }
+
+        /* ===== SPRINT 7+8: ACRONYM LIST ===== */
+        @keyframes alRowIn {
+            0% { opacity: 0; transform: translateX(-10px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .slide-acronym-list {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 3rem; min-height: 70vh;
+        }
+        .slide-acronym-list .al-title {
+            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800;
+            color: var(--accent, #f97316); margin-bottom: 0.3rem;
+        }
+        .slide-acronym-list .al-tagline {
+            font-size: 0.9rem; color: var(--text, #f1f5f9); opacity: 0.5;
+            margin-bottom: 1.5rem;
+        }
+        .slide-acronym-list .al-rows { max-width: 600px; width: 100%; }
+        .slide-acronym-list .al-row {
+            display: flex; align-items: baseline; gap: 1rem;
+            padding: 0.5rem 0; opacity: 0; animation: alRowIn 0.4s ease-out forwards;
+        }
+        .slide-acronym-list .al-letter {
+            font-size: 2rem; font-weight: 900; color: var(--accent, #f97316);
+            min-width: 2.5rem; text-align: center;
+        }
+        .slide-acronym-list .al-word {
+            font-size: 1.1rem; font-weight: 700; color: var(--text, #f1f5f9);
+        }
+        .slide-acronym-list .al-desc {
+            font-size: 0.9rem; color: var(--text, #f1f5f9); opacity: 0.6; font-style: italic;
+        }
+
+        /* ===== SPRINT 7+8 BONUS: MAP PINS ===== */
+        @keyframes mpPinDrop {
+            0% { opacity: 0; transform: translate(-50%, -150%); }
+            60% { transform: translate(-50%, -90%); }
+            80% { transform: translate(-50%, -105%); }
+            100% { opacity: 1; transform: translate(-50%, -100%); }
+        }
+        .slide-map-pins {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 2rem; min-height: 70vh;
+        }
+        .slide-map-pins .mp-title {
+            font-size: 1.3rem; font-weight: 700; color: var(--text, #f1f5f9);
+            margin-bottom: 1rem;
+        }
+        .slide-map-pins .mp-container {
+            position: relative; display: inline-block; max-width: 800px; width: 100%;
+        }
+        .slide-map-pins .mp-container img {
+            width: 100%; border-radius: 12px; display: block;
+        }
+        .slide-map-pins .mp-pin {
+            position: absolute; width: 16px; height: 16px;
+            background: var(--accent, #f97316); border-radius: 50%;
+            border: 2px solid #fff; cursor: pointer;
+            opacity: 0; animation: mpPinDrop 0.5s ease-out forwards;
+            z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        }
+        .slide-map-pins .mp-pin::after {
+            content: ''; position: absolute; top: -4px; left: -4px;
+            width: 24px; height: 24px; border-radius: 50%;
+            border: 2px solid var(--accent, #f97316); opacity: 0;
+            animation: calloutPulse 2s infinite 1s;
+        }
+        .slide-map-pins .mp-tooltip {
+            position: absolute; bottom: calc(100% + 8px); left: 50%;
+            transform: translateX(-50%); background: rgba(0,0,0,0.85);
+            color: #fff; padding: 0.4rem 0.7rem; border-radius: 8px;
+            font-size: 0.8rem; white-space: nowrap; pointer-events: none;
+            opacity: 0; transition: opacity 0.2s;
+        }
+        .slide-map-pins .mp-pin:hover .mp-tooltip { opacity: 1; }
+
+        /* ===== SPRINT 7+8 BONUS: MINDMAP ===== */
+        @keyframes mmNodePop {
+            0% { opacity: 0; transform: scale(0.7); }
+            70% { transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .slide-mindmap {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 2rem; min-height: 70vh;
+        }
+        .slide-mindmap .mm-title {
+            font-size: 1.3rem; font-weight: 700; color: var(--text, #f1f5f9);
+            margin-bottom: 1rem;
+        }
+        .slide-mindmap .mm-canvas {
+            position: relative; width: 100%; max-width: 850px;
+            min-height: 400px;
+        }
+        .slide-mindmap .mm-node {
+            position: absolute; padding: 0.6rem 1.2rem;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px; cursor: pointer;
+            opacity: 0; animation: mmNodePop 0.4s ease-out forwards;
+            transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+            z-index: 2;
+        }
+        .slide-mindmap .mm-node:hover {
+            border-color: var(--accent, #f97316);
+            box-shadow: 0 0 20px rgba(249,115,22,0.25);
+            background: rgba(255,255,255,0.12);
+        }
+        .slide-mindmap .mm-node.mm-center {
+            background: var(--accent, #f97316); color: #fff;
+            border-color: var(--accent, #f97316); font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .slide-mindmap .mm-node-label {
+            font-size: 0.9rem; font-weight: 600; color: var(--text, #f1f5f9);
+        }
+        .slide-mindmap .mm-node-detail {
+            display: none; font-size: 0.8rem; color: var(--text, #f1f5f9);
+            opacity: 0.7; margin-top: 0.3rem; max-width: 200px;
+        }
+        .slide-mindmap .mm-node.mm-expanded .mm-node-detail { display: block; }
+        .slide-mindmap .mm-lines {
+            position: absolute; inset: 0; z-index: 1;
+        }
+        .slide-mindmap .mm-lines line {
+            stroke: rgba(255,255,255,0.12); stroke-width: 1;
+        }
     `;
     document.head.appendChild(style);
 
@@ -1960,6 +2151,136 @@
         `;
     }
 
+    // ===== SPRINT 7+8+BONUS RENDERERS =====
+
+    /**
+     * collage — Image grid.
+     * Props: title, images[] (URLs), layout ("grid-2"|"grid-3"|"grid-4")
+     */
+    function renderCollage(s) {
+        const images = s.images || [];
+        const cols = s.layout === 'grid-2' ? 'col-2' : s.layout === 'grid-4' ? 'col-4' : 'col-3';
+        const imgs = images.map((url, i) =>
+            `<img class="col-img" src="${url}" alt="" style="animation-delay:${i * 0.15}s">`
+        ).join('');
+        return `
+            <div class="slide-collage">
+                ${s.title ? `<div class="col-title">${s.title}</div>` : ''}
+                <div class="col-grid ${cols}">${imgs}</div>
+            </div>
+        `;
+    }
+
+    /**
+     * process-chain — Node chain with arrows.
+     * Props: title, nodes[] ({ label, hint, status: "done"|"active"|"upcoming" })
+     */
+    function renderProcessChain(s) {
+        const nodes = s.nodes || [];
+        const html = nodes.map((n, i) => {
+            const cls = n.status === 'active' ? 'pc-active' : '';
+            const delay = i * 0.2;
+            const arrow = i < nodes.length - 1 ? '<span class="pc-arrow">→</span>' : '';
+            return `<div class="pc-node ${cls}" style="animation-delay:${delay}s">
+                <div class="pc-node-label">${n.label || ''}</div>
+                ${n.hint ? `<div class="pc-node-hint">${n.hint}</div>` : ''}
+            </div>${arrow}`;
+        }).join('');
+        return `
+            <div class="slide-process-chain">
+                ${s.title ? `<div class="pc-title">${s.title}</div>` : ''}
+                <div class="pc-chain">${html}</div>
+            </div>
+        `;
+    }
+
+    /**
+     * acronym-list — SAMR, Bloom etc.
+     * Props: title, tagline, items[] ({ letter, word, description })
+     */
+    function renderAcronymList(s) {
+        const items = s.items || [];
+        const rows = items.map((item, i) => {
+            const delay = i * 0.15;
+            return `<div class="al-row" style="animation-delay:${delay}s">
+                ${item.letter ? `<div class="al-letter">${item.letter}</div>` : ''}
+                <div>
+                    <span class="al-word">${item.word || ''}</span>
+                    ${item.description ? `<span class="al-desc"> — ${item.description}</span>` : ''}
+                </div>
+            </div>`;
+        }).join('');
+        return `
+            <div class="slide-acronym-list">
+                ${s.title ? `<div class="al-title">${s.title}</div>` : ''}
+                ${s.tagline ? `<div class="al-tagline">${s.tagline}</div>` : ''}
+                <div class="al-rows">${rows}</div>
+            </div>
+        `;
+    }
+
+    /**
+     * map-pins — Image with positioned pins and hover tooltips.
+     * Props: title, mapImage, pins[] ({ label, x, y, note })
+     */
+    function renderMapPins(s) {
+        const pins = s.pins || [];
+        const pinHtml = pins.map((p, i) => {
+            const delay = i * 0.2;
+            return `<div class="mp-pin" style="left:${p.x}%; top:${p.y}%; animation-delay:${delay}s">
+                <div class="mp-tooltip">${p.label || ''}${p.note ? ` — ${p.note}` : ''}</div>
+            </div>`;
+        }).join('');
+        return `
+            <div class="slide-map-pins">
+                ${s.title ? `<div class="mp-title">${s.title}</div>` : ''}
+                <div class="mp-container">
+                    <img src="${s.mapImage || ''}" alt="Map">
+                    ${pinHtml}
+                </div>
+            </div>
+        `;
+    }
+
+    /**
+     * mindmap — Interactive concept map with clickable nodes.
+     * Props: title, center (string), nodes[] ({ label, detail, x, y })
+     * x/y are percentages. Center node is at 50%/50%.
+     * Click a node to toggle its detail text.
+     */
+    function renderMindmap(s) {
+        const nodes = s.nodes || [];
+        const cx = 50, cy = 50;
+
+        // SVG lines from center to each node
+        const lines = nodes.map(n =>
+            `<line x1="${cx}%" y1="${cy}%" x2="${n.x}%" y2="${n.y}%"/>`
+        ).join('');
+
+        // Node elements
+        const nodeHtml = nodes.map((n, i) => {
+            const delay = (i + 1) * 0.15;
+            return `<div class="mm-node" style="left:${n.x}%; top:${n.y}%; transform:translate(-50%,-50%); animation-delay:${delay}s"
+                onclick="this.classList.toggle('mm-expanded')">
+                <div class="mm-node-label">${n.label || ''}</div>
+                ${n.detail ? `<div class="mm-node-detail">${n.detail}</div>` : ''}
+            </div>`;
+        }).join('');
+
+        return `
+            <div class="slide-mindmap">
+                ${s.title ? `<div class="mm-title">${s.title}</div>` : ''}
+                <div class="mm-canvas">
+                    <svg class="mm-lines" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
+                    <div class="mm-node mm-center" style="left:${cx}%; top:${cy}%; transform:translate(-50%,-50%); animation-delay:0s; opacity:1">
+                        <div class="mm-node-label">${s.center || 'Tema'}</div>
+                    </div>
+                    ${nodeHtml}
+                </div>
+            </div>
+        `;
+    }
+
     // ===== MONKEY-PATCH REGISTRY =====
     const allTypes = {
         'word-cascade': renderWordCascade,
@@ -1986,7 +2307,13 @@
         'stat-compare': renderStatCompare,
         'voice-collage': renderVoiceCollage,
         'portrait-quote': renderPortraitQuote,
-        'reflection': renderReflection
+        'reflection': renderReflection,
+        // Sprint 7+8+Bonus
+        'collage': renderCollage,
+        'process-chain': renderProcessChain,
+        'acronym-list': renderAcronymList,
+        'map-pins': renderMapPins,
+        'mindmap': renderMindmap
     };
 
     function registerTypes() {

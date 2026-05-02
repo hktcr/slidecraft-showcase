@@ -1,7 +1,7 @@
 {
     "meta": {
         "title": "SlideCraft Component Forge — Showcase",
-        "subtitle": "22 animerade slide-typer · 17 teman · Noll beroenden",
+        "subtitle": "27 animerade slide-typer · 17 teman · Noll beroenden",
         "version": "2.0",
         "date": "2026-05-02",
         "note": "⚠️ ALL DATA PÅ DESSA SLIDES ÄR FIKTIV/DEMO — siffror, citat och påståenden är illustrativa exempel."
@@ -11,7 +11,7 @@
             "id": "title",
             "type": "title",
             "title": "SlideCraft Component Forge",
-            "subtitle": "22 animerade slide-typer · 17 teman · 0 externa beroenden",
+            "subtitle": "27 animerade slide-typer · 17 teman · 0 externa beroenden",
             "background": "",
             "note": "Demo — all data är fiktiv"
         },
@@ -302,6 +302,77 @@
             ],
             "cardTitle": "reflection",
             "cardSubtitle": "Reflektionsfrågor med stagger-animation"
+        },
+        {
+            "id": "collage-demo",
+            "type": "collage",
+            "title": "Bildkollage — DEMO",
+            "layout": "grid-3",
+            "images": [
+                "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=400&q=80",
+                "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=400&q=80",
+                "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?w=400&q=80"
+            ],
+            "cardTitle": "collage",
+            "cardSubtitle": "Bildrutnät med stagger-animation"
+        },
+        {
+            "id": "process-chain-demo",
+            "type": "process-chain",
+            "title": "Från idé till klassrum — DEMO",
+            "nodes": [
+                { "label": "Observation", "hint": "Vad ser vi?", "status": "done" },
+                { "label": "Reflektion", "hint": "Vad betyder det?", "status": "done" },
+                { "label": "Design", "hint": "Hur testar vi?", "status": "active" },
+                { "label": "Genomförande", "hint": "I klassrummet", "status": "upcoming" },
+                { "label": "Utvärdering", "hint": "Vad lärde vi oss?", "status": "upcoming" }
+            ],
+            "cardTitle": "process-chain",
+            "cardSubtitle": "Processkedja med statusnoder"
+        },
+        {
+            "id": "acronym-list-demo",
+            "type": "acronym-list",
+            "title": "SAMR",
+            "tagline": "Ruben Puentedura, 2006",
+            "items": [
+                { "letter": "S", "word": "Substitution", "description": "Teknik ersätter utan funktionell ändring" },
+                { "letter": "A", "word": "Augmentation", "description": "Teknik ersätter med funktionell förbättring" },
+                { "letter": "M", "word": "Modification", "description": "Teknik möjliggör väsentlig omdesign" },
+                { "letter": "R", "word": "Redefinition", "description": "Teknik skapar helt nya uppgifter" }
+            ],
+            "cardTitle": "acronym-list",
+            "cardSubtitle": "Pedagogiska ramverk med stegad reveal"
+        },
+        {
+            "id": "map-pins-demo",
+            "type": "map-pins",
+            "title": "ULF-nätverket — DEMO",
+            "mapImage": "https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&q=80",
+            "pins": [
+                { "label": "Åstorp", "x": 45, "y": 30, "note": "Kommunal lektor" },
+                { "label": "Lund", "x": 52, "y": 55, "note": "Universitetspartner" },
+                { "label": "Malmö", "x": 38, "y": 65, "note": "Nätverkshubb" },
+                { "label": "Helsingborg", "x": 30, "y": 40, "note": "CRE APT" }
+            ],
+            "cardTitle": "map-pins",
+            "cardSubtitle": "Karta med dropande pins och tooltips"
+        },
+        {
+            "id": "mindmap-demo",
+            "type": "mindmap",
+            "title": "AI i skolan — konceptkarta (klicka för detaljer)",
+            "center": "AI i skolan",
+            "nodes": [
+                { "label": "Pedagogik", "detail": "Adaptiv undervisning, differentiering, formativ bedömning", "x": 20, "y": 20 },
+                { "label": "Etik", "detail": "Dataintegritet, bias, transparens, elevsekretess", "x": 80, "y": 20 },
+                { "label": "Verktyg", "detail": "ChatGPT, Gemini, Claude, Copilot, Khanmigo", "x": 15, "y": 75 },
+                { "label": "Policy", "detail": "EU AI Act, Skolverkets riktlinjer, kommunala strategier", "x": 85, "y": 75 },
+                { "label": "Forskning", "detail": "Metaanalyser, ULF-projekt, lärarprofession", "x": 50, "y": 10 },
+                { "label": "Bedömning", "detail": "Hur vet vi att eleven kan? Nya bedömningsformer", "x": 50, "y": 90 }
+            ],
+            "cardTitle": "mindmap",
+            "cardSubtitle": "Interaktiv konceptkarta med klickbara noder"
         }
     ]
 }
