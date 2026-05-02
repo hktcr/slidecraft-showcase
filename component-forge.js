@@ -1275,26 +1275,31 @@
             width: 100%; border-radius: 12px; display: block;
         }
         .slide-map-pins .mp-pin {
-            position: absolute; width: 16px; height: 16px;
+            position: absolute; width: 18px; height: 18px;
             background: var(--accent, #f97316); border-radius: 50%;
             border: 2px solid #fff; cursor: pointer;
             opacity: 0; animation: mpPinDrop 0.5s ease-out forwards;
             z-index: 2; box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
         }
+        .slide-map-pins .mp-pin:hover { transform: translate(-50%, -100%) scale(1.3); }
         .slide-map-pins .mp-pin::after {
-            content: ''; position: absolute; top: -4px; left: -4px;
-            width: 24px; height: 24px; border-radius: 50%;
+            content: ''; position: absolute; top: -6px; left: -6px;
+            width: 30px; height: 30px; border-radius: 50%;
             border: 2px solid var(--accent, #f97316); opacity: 0;
             animation: calloutPulse 2s infinite 1s;
         }
         .slide-map-pins .mp-tooltip {
-            position: absolute; bottom: calc(100% + 8px); left: 50%;
-            transform: translateX(-50%); background: rgba(0,0,0,0.85);
-            color: #fff; padding: 0.4rem 0.7rem; border-radius: 8px;
+            position: absolute; bottom: calc(100% + 10px); left: 50%;
+            transform: translateX(-50%); background: rgba(0,0,0,0.9);
+            color: #fff; padding: 0.5rem 0.8rem; border-radius: 10px;
             font-size: 0.8rem; white-space: nowrap; pointer-events: none;
             opacity: 0; transition: opacity 0.2s;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
-        .slide-map-pins .mp-pin:hover .mp-tooltip { opacity: 1; }
+        .slide-map-pins .mp-pin:hover .mp-tooltip,
+        .slide-map-pins .mp-pin.mp-open .mp-tooltip { opacity: 1; }
 
         /* ===== SPRINT 7+8 BONUS: MINDMAP ===== */
         @keyframes mmNodePop {
@@ -2249,15 +2254,17 @@
     }
 
     /**
-     * map-pins — Image with positioned pins and hover tooltips.
+     * map-pins — Image with positioned pins, click-to-show info panels.
      * Props: title, mapImage, pins[] ({ label, x, y, note })
      */
     function renderMapPins(s) {
         const pins = s.pins || [];
         const pinHtml = pins.map((p, i) => {
             const delay = i * 0.2;
-            return `<div class="mp-pin" style="left:${p.x}%; top:${p.y}%; animation-delay:${delay}s">
+            return `<div class="mp-pin" style="left:${p.x}%; top:${p.y}%; animation-delay:${delay}s"
+                onclick="this.classList.toggle('mp-open')">
                 <div class="mp-tooltip">${p.label || ''}${p.note ? ` — ${p.note}` : ''}</div>
+                <div class="mp-pulse"></div>
             </div>`;
         }).join('');
         return `
@@ -2272,36 +2279,57 @@
     }
 
     /**
-     * mindmap — Interactive concept map with clickable nodes.
-     * Props: title, center (string), nodes[] ({ label, detail, x, y })
-     * x/y are percentages. Center node is at 50%/50%.
-     * Click a node to toggle its detail text.
+     * mindmap — Interactive concept map with auto-positioned nodes and curved SVG connections.
+     * Props: title, center (string), nodes[] ({ label, detail, children[]? })
+     * Auto-calculates radial positions. Click to expand detail.
      */
     function renderMindmap(s) {
         const nodes = s.nodes || [];
+        const id = 'mm-' + Math.random().toString(36).slice(2, 8);
+
+        // Auto-calculate positions if not provided
+        const positioned = nodes.map((n, i) => {
+            const angle = (i / nodes.length) * Math.PI * 2 - Math.PI / 2;
+            const rx = 35, ry = 35;
+            return {
+                ...n,
+                x: n.x != null ? n.x : 50 + Math.cos(angle) * rx,
+                y: n.y != null ? n.y : 50 + Math.sin(angle) * ry
+            };
+        });
+
+        // SVG curved paths from center to each node
         const cx = 50, cy = 50;
+        const paths = positioned.map((n, i) => {
+            const mx = (cx + n.x) / 2;
+            const my = (cy + n.y) / 2;
+            // Add slight curve
+            const offset = (i % 2 === 0 ? 5 : -5);
+            const cpx = mx + offset;
+            const cpy = my + offset;
+            return `<path d="M ${cx} ${cy} Q ${cpx} ${cpy} ${n.x} ${n.y}"
+                fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="0.4"
+                stroke-dasharray="1 0.5" />`;
+        }).join('');
 
-        // SVG lines from center to each node
-        const lines = nodes.map(n =>
-            `<line x1="${cx}%" y1="${cy}%" x2="${n.x}%" y2="${n.y}%"/>`
-        ).join('');
-
-        // Node elements
-        const nodeHtml = nodes.map((n, i) => {
-            const delay = (i + 1) * 0.15;
-            return `<div class="mm-node" style="left:${n.x}%; top:${n.y}%; transform:translate(-50%,-50%); animation-delay:${delay}s"
+        // Node elements with color coding
+        const colors = ['#f97316', '#a855f7', '#22d3ee', '#10b981', '#f59e0b', '#ec4899', '#6366f1', '#14b8a6'];
+        const nodeHtml = positioned.map((n, i) => {
+            const delay = (i + 1) * 0.12;
+            const color = colors[i % colors.length];
+            return `<div class="mm-node" style="left:${n.x}%; top:${n.y}%; transform:translate(-50%,-50%); animation-delay:${delay}s; border-color:${color}"
                 onclick="this.classList.toggle('mm-expanded')">
-                <div class="mm-node-label">${n.label || ''}</div>
+                <div class="mm-node-label" style="color:${color}">${n.label || ''}</div>
                 ${n.detail ? `<div class="mm-node-detail">${n.detail}</div>` : ''}
             </div>`;
         }).join('');
 
         return `
-            <div class="slide-mindmap">
+            <div class="slide-mindmap" id="${id}">
                 ${s.title ? `<div class="mm-title">${s.title}</div>` : ''}
                 <div class="mm-canvas">
-                    <svg class="mm-lines" viewBox="0 0 100 100" preserveAspectRatio="none">${lines}</svg>
-                    <div class="mm-node mm-center" style="left:${cx}%; top:${cy}%; transform:translate(-50%,-50%); animation-delay:0s; opacity:1">
+                    <svg class="mm-lines" viewBox="0 0 100 100" preserveAspectRatio="none">${paths}</svg>
+                    <div class="mm-node mm-center" style="left:${cx}%; top:${cy}%; transform:translate(-50%,-50%); opacity:1">
                         <div class="mm-node-label">${s.center || 'Tema'}</div>
                     </div>
                     ${nodeHtml}
@@ -2314,141 +2342,113 @@
 
     /**
      * letter-morph — Scattered letters form words, unused become elliptical frame.
-     * Props: phrases[] (array of strings), alphabet (optional extra letters)
+     * Props: phrases[] (array of strings)
      * Click to cycle through phrases.
+     * Uses setTimeout post-render pattern (no embedded script tags).
      */
     function renderLetterMorph(s) {
         const id = 'lm-' + Math.random().toString(36).slice(2, 8);
         const phrases = s.phrases || ['Hej världen'];
-        const totalLetters = 80; // total scattered letters
+        const totalLetters = 80;
+
+        // Schedule initialization after DOM insertion via setTimeout
+        setTimeout(() => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ';
+            let phraseIdx = 0;
+            let letters = [];
+            let seed = 42;
+
+            function rng() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+            function createLetters() {
+                letters.forEach(l => l.el && l.el.remove());
+                letters = [];
+                seed = 42;
+                for (let i = 0; i < totalLetters; i++) {
+                    const span = document.createElement('span');
+                    span.className = 'lm-letter';
+                    span.textContent = alphabet[Math.floor(rng() * alphabet.length)];
+                    span.style.fontSize = (14 + rng() * 20) + 'px';
+                    span.style.left = (rng() * 90 + 5) + '%';
+                    span.style.top = (rng() * 85 + 5) + '%';
+                    span.style.opacity = '0.08';
+                    span.style.transform = 'rotate(' + (rng() * 60 - 30) + 'deg)';
+                    el.appendChild(span);
+                    letters.push({ el: span, role: 'scatter' });
+                }
+            }
+
+            function morphTo(phrase) {
+                const chars = phrase.toUpperCase().split('');
+                const cx = 50, cy = 50;
+                const fontSize = Math.min(3.5, 50 / Math.max(chars.length, 1));
+                const charWidth = fontSize * 0.65;
+                const totalWidth = chars.length * charWidth;
+                const startX = cx - totalWidth / 2;
+                let usedCount = 0;
+
+                chars.forEach((c, i) => {
+                    if (c === ' ') return;
+                    if (usedCount < letters.length) {
+                        const l = letters[usedCount];
+                        l.el.textContent = c;
+                        l.el.className = 'lm-letter lm-active';
+                        l.el.style.fontSize = fontSize + 'rem';
+                        l.el.style.opacity = '1';
+                        l.el.style.transform = 'rotate(0deg)';
+                        l.el.style.left = (startX + i * charWidth) + '%';
+                        l.el.style.top = cy + '%';
+                        usedCount++;
+                    }
+                });
+
+                const remaining = letters.length - usedCount;
+                for (let i = usedCount; i < letters.length; i++) {
+                    const l = letters[i];
+                    const fi = i - usedCount;
+                    const angle = (fi / remaining) * Math.PI * 2;
+                    const rx = 42, ry = 38;
+                    l.el.textContent = alphabet[Math.floor(Math.abs(Math.sin(fi * 7.3)) * alphabet.length)];
+                    l.el.className = 'lm-letter lm-frame';
+                    l.el.style.fontSize = (0.7 + Math.abs(Math.sin(angle)) * 0.5) + 'rem';
+                    l.el.style.opacity = '';
+                    l.el.style.transform = 'rotate(' + Math.round(Math.sin(angle) * 15) + 'deg)';
+                    l.el.style.left = (cx + Math.cos(angle) * rx) + '%';
+                    l.el.style.top = (cy + Math.sin(angle) * ry) + '%';
+                }
+
+                const counter = el.querySelector('.lm-counter');
+                if (counter) counter.textContent = (phraseIdx + 1) + ' / ' + phrases.length;
+            }
+
+            function scrambleAndMorph() {
+                seed = phraseIdx * 137 + 42;
+                letters.forEach(l => {
+                    l.el.style.left = (5 + Math.abs(Math.sin(seed++ * 3.7)) * 90) + '%';
+                    l.el.style.top = (5 + Math.abs(Math.cos(seed++ * 2.3)) * 85) + '%';
+                    l.el.style.opacity = '0.06';
+                    l.el.style.transform = 'rotate(' + ((seed % 60) - 30) + 'deg)';
+                    l.el.className = 'lm-letter';
+                });
+                setTimeout(() => morphTo(phrases[phraseIdx]), 400);
+            }
+
+            createLetters();
+            setTimeout(() => morphTo(phrases[0]), 600);
+
+            el.addEventListener('click', () => {
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                scrambleAndMorph();
+            });
+        }, 100); // 100ms delay ensures DOM is ready after innerHTML
 
         return `
             <div class="slide-letter-morph" id="${id}">
                 <div class="lm-hint">Klicka för nästa</div>
                 <div class="lm-counter"></div>
             </div>
-            <script>
-            (function() {
-                const el = document.getElementById('${id}');
-                if (!el) return;
-                const phrases = ${JSON.stringify(phrases)};
-                const total = ${totalLetters};
-                let phraseIdx = 0;
-                let letters = [];
-                const W = () => el.offsetWidth || 800;
-                const H = () => el.offsetHeight || 500;
-
-                // Seeded random for deterministic scatter
-                let seed = 42;
-                function rng() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
-
-                // All possible chars
-                const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ';
-
-                function createLetters() {
-                    // Remove old
-                    letters.forEach(l => l.el && l.el.remove());
-                    letters = [];
-                    seed = 42;
-
-                    for (let i = 0; i < total; i++) {
-                        const span = document.createElement('span');
-                        span.className = 'lm-letter';
-                        span.textContent = alphabet[Math.floor(rng() * alphabet.length)];
-                        span.style.fontSize = (14 + rng() * 20) + 'px';
-                        // Start scattered
-                        span.style.left = (rng() * 90 + 5) + '%';
-                        span.style.top = (rng() * 85 + 5) + '%';
-                        span.style.opacity = '0.08';
-                        span.style.transform = 'rotate(' + (rng() * 60 - 30) + 'deg)';
-                        el.appendChild(span);
-                        letters.push({ el: span, char: '', role: 'scatter' });
-                    }
-                }
-
-                function morphTo(phrase) {
-                    const chars = phrase.toUpperCase().split('');
-                    const activeChars = chars.filter(c => c !== ' ');
-                    const cx = 50, cy = 50;
-
-                    // Layout: place phrase letters in center, spaced
-                    const fontSize = Math.min(3.5, 40 / Math.max(chars.length, 1));
-                    const charWidth = fontSize * 0.65; // approx em
-                    const totalWidth = chars.length * charWidth;
-                    const startX = cx - totalWidth / 2;
-
-                    let charIdx = 0;
-                    let usedCount = 0;
-
-                    // Assign phrase chars to first N letters
-                    chars.forEach((c, i) => {
-                        if (c === ' ') return; // skip spaces
-                        if (usedCount < letters.length) {
-                            const l = letters[usedCount];
-                            l.el.textContent = c;
-                            l.el.className = 'lm-letter lm-active';
-                            l.el.style.fontSize = fontSize + 'rem';
-                            l.el.style.opacity = '1';
-                            l.el.style.transform = 'rotate(0deg)';
-                            // Position: account for spaces
-                            const xPos = startX + i * charWidth;
-                            l.el.style.left = xPos + '%';
-                            l.el.style.top = cy + '%';
-                            l.role = 'active';
-                            usedCount++;
-                        }
-                    });
-
-                    // Remaining letters: form elliptical frame
-                    const remaining = letters.length - usedCount;
-                    for (let i = usedCount; i < letters.length; i++) {
-                        const l = letters[i];
-                        const frameIdx = i - usedCount;
-                        const angle = (frameIdx / remaining) * Math.PI * 2;
-                        const rx = 42, ry = 38; // ellipse radii in %
-                        const fx = cx + Math.cos(angle) * rx;
-                        const fy = cy + Math.sin(angle) * ry;
-
-                        l.el.textContent = alphabet[Math.floor(Math.abs(Math.sin(frameIdx * 7.3)) * alphabet.length)];
-                        l.el.className = 'lm-letter lm-frame';
-                        l.el.style.fontSize = (0.7 + Math.abs(Math.sin(angle)) * 0.5) + 'rem';
-                        l.el.style.opacity = '';
-                        l.el.style.transform = 'rotate(' + Math.round(Math.sin(angle) * 15) + 'deg)';
-                        l.el.style.left = fx + '%';
-                        l.el.style.top = fy + '%';
-                        l.role = 'frame';
-                    }
-
-                    // Update counter
-                    const counter = el.querySelector('.lm-counter');
-                    if (counter) counter.textContent = (phraseIdx + 1) + ' / ' + phrases.length;
-                }
-
-                function next() {
-                    // Brief scatter before morphing
-                    seed = phraseIdx * 137 + 42;
-                    letters.forEach(l => {
-                        l.el.style.left = (5 + Math.abs(Math.sin(seed++ * 3.7)) * 90) + '%';
-                        l.el.style.top = (5 + Math.abs(Math.cos(seed++ * 2.3)) * 85) + '%';
-                        l.el.style.opacity = '0.06';
-                        l.el.style.transform = 'rotate(' + ((seed % 60) - 30) + 'deg)';
-                        l.el.className = 'lm-letter';
-                    });
-
-                    setTimeout(() => morphTo(phrases[phraseIdx]), 400);
-                }
-
-                createLetters();
-                // Initial morph after scatter
-                setTimeout(() => morphTo(phrases[0]), 600);
-
-                el.addEventListener('click', (e) => {
-                    if (e.target.closest('.lm-hint') || e.target.closest('.lm-counter')) return;
-                    phraseIdx = (phraseIdx + 1) % phrases.length;
-                    next();
-                });
-            })();
-            <\/script>
         `;
     }
 
