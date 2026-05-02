@@ -261,16 +261,46 @@
         });
 
         // === LOAD SLIDES ===
-        fetch('slides.json')
-            .then(r => r.json())
-            .then(data => {
-                slidesData = data.slides || [];
-                renderCards();
-            })
-            .catch(err => {
-                console.error('Failed to load slides.json:', err);
-                document.getElementById('cardView').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--red)">Kunde inte ladda slides.json</p>';
-            });
+        function loadSlides() {
+            // fetch fails on file:// protocol, use XMLHttpRequest as fallback
+            if (window.location.protocol === 'file:') {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', 'slides.json', true);
+                xhr.onload = function() {
+                    if (xhr.status === 200 || xhr.status === 0) {
+                        try {
+                            const data = JSON.parse(xhr.responseText);
+                            slidesData = data.slides || [];
+                            // Update header with meta info
+                            const headerP = document.querySelector('.showcase-header p');
+                            if (headerP && data.meta) headerP.textContent = data.meta.subtitle || '';
+                            renderCards();
+                        } catch(e) {
+                            console.error('JSON parse error:', e);
+                            document.getElementById('cardView').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--red)">JSON-syntaxfel: ' + e.message + '</p>';
+                        }
+                    }
+                };
+                xhr.onerror = function() {
+                    document.getElementById('cardView').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--red)">Kunde inte ladda slides.json (kontrollera att filen finns)</p>';
+                };
+                xhr.send();
+            } else {
+                fetch('slides.json')
+                    .then(r => r.json())
+                    .then(data => {
+                        slidesData = data.slides || [];
+                        const headerP = document.querySelector('.showcase-header p');
+                        if (headerP && data.meta) headerP.textContent = data.meta.subtitle || '';
+                        renderCards();
+                    })
+                    .catch(err => {
+                        console.error('Failed to load slides.json:', err);
+                        document.getElementById('cardView').innerHTML = '<p style="text-align:center;padding:4rem;color:var(--red)">Kunde inte ladda slides.json</p>';
+                    });
+            }
+        }
+        loadSlides();
     })();
     </script>
 </body>
