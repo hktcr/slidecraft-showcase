@@ -1018,6 +1018,7 @@
         }
 
         /* ===== SPRINT 6: STAT COMPARE ===== */
+        @keyframes scArrowPulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 8px rgba(249,115,22,0.4)); } 100% { transform: scale(1); } }
         @keyframes scArrowDraw {
             0% { stroke-dashoffset: 60; }
             100% { stroke-dashoffset: 0; }
@@ -1246,6 +1247,8 @@
             font-size: 2rem; font-weight: 900; color: var(--accent, #f97316);
             min-width: 2.5rem; text-align: center;
         }
+        .slide-acronym-list .al-letter { transition: transform 0.2s, text-shadow 0.2s; cursor: default; }
+        .slide-acronym-list .al-row:hover .al-letter { transform: scale(1.2); text-shadow: 0 0 15px rgba(249,115,22,0.4); }
         .slide-acronym-list .al-word {
             font-size: 1.1rem; font-weight: 700; color: var(--text, #f1f5f9);
         }
@@ -1298,6 +1301,11 @@
             border: 1px solid rgba(255,255,255,0.15);
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
+        .slide-map-pins .mp-tooltip::after {
+            content: ""; position: absolute; top: 100%; left: 50%;
+            margin-left: -6px; border-width: 6px; border-style: solid;
+            border-color: rgba(0,0,0,0.9) transparent transparent transparent;
+        }
         .slide-map-pins .mp-pin:hover .mp-tooltip,
         .slide-map-pins .mp-pin.mp-open .mp-tooltip { opacity: 1; }
 
@@ -1332,11 +1340,13 @@
             box-shadow: 0 0 20px rgba(249,115,22,0.25);
             background: rgba(255,255,255,0.12);
         }
+        @keyframes mmCenterPulse { 0% { box-shadow: 0 0 0 0 rgba(249,115,22,0.4); } 70% { box-shadow: 0 0 0 15px rgba(249,115,22,0); } 100% { box-shadow: 0 0 0 0 rgba(249,115,22,0); } }
         .slide-mindmap .mm-node.mm-center {
             background: var(--accent, #f97316); color: #fff;
             border-color: var(--accent, #f97316); font-weight: 700;
             font-size: 1.1rem;
         }
+            animation: mmCenterPulse 3s infinite;
         .slide-mindmap .mm-node-label {
             font-size: 0.9rem; font-weight: 600; color: var(--text, #f1f5f9);
         }
@@ -1367,7 +1377,7 @@
             color: var(--text, #f1f5f9);
         }
         .slide-letter-morph .lm-letter.lm-frame {
-            color: var(--accent, #f97316); opacity: 0.12;
+            color: var(--accent, #f97316); opacity: 0.06;
         }
         .slide-letter-morph .lm-hint {
             position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
